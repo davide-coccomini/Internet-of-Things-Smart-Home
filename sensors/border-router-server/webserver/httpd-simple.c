@@ -37,7 +37,7 @@
  *         Joakim Eriksson <joakime@sics.se>
  */
 
-#include "../server/webserver/httpd-simple.h"
+#include "../sensor/webserver/httpd-simple.h"
 
 #include "contiki.h"
 #include "contiki-net.h"

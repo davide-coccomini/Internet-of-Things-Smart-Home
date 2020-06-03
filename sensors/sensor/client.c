@@ -25,10 +25,14 @@ static struct etimer et;
 
 bool rpl_add = false;
 
+extern coap_resource_t res_power;
+extern coap_resource_t res_temperature;
+
 /*---------------------------------------------------------------------------*/
-PROCESS(udp_client_process, "UDP client");
-PROCESS(er_example_client, "Erbium Example Client");
-AUTOSTART_PROCESSES(&udp_client_process, &er_example_client);
+PROCESS(udp_client, "UDP client");
+PROCESS(coap_client, "CoAP Client");
+PROCESS(coap_server, "CoAP Server");
+AUTOSTART_PROCESSES(&udp_client, &coap_client, &coap_server);
 
 /*---------------------------------------------------------------------------*/
 static void udp_rx_callback(struct simple_udp_connection *c, const uip_ipaddr_t *sender_addr,
@@ -38,23 +42,19 @@ static void udp_rx_callback(struct simple_udp_connection *c, const uip_ipaddr_t 
   LOG_INFO_("\n");
 }
 
-void
-client_chunk_handler(coap_message_t *response)
+void client_chunk_handler(coap_message_t *response)
 {
   const uint8_t *chunk;
-
   if(response == NULL) {
     puts("Request timed out");
     return;
   }
-
   int len = coap_get_payload(response, &chunk);
-
   printf("|%.*s", len, (char *)chunk);
 }
 
 /*---------------------------------------------------------------------------*/
-PROCESS_THREAD(udp_client_process, ev, data){
+PROCESS_THREAD(udp_client, ev, data){
   static struct etimer periodic_timer;
   uip_ipaddr_t dest_ipaddr;
   static unsigned int message_number = 0;
@@ -78,8 +78,6 @@ PROCESS_THREAD(udp_client_process, ev, data){
       message_number++;
       simple_udp_sendto(&udp_conn, buf, strlen(buf) + 1, &dest_ipaddr);
 	  rpl_add = true;
-	  //printf(rpl_add + "\n");
-	  //etimer_set(&et, TOGGLE_INTERVAL * CLOCK_SECOND);
 	  
 	  START_INTERVAL = 50;
     } 
@@ -93,7 +91,7 @@ PROCESS_THREAD(udp_client_process, ev, data){
 }
   
 /*---------------------------------------------------------------------------*/
-PROCESS_THREAD(er_example_client, ev, data){
+PROCESS_THREAD(coap_client, ev, data){
 
   static coap_endpoint_t server_ep;
   static coap_message_t request[1]; 
@@ -107,7 +105,6 @@ PROCESS_THREAD(er_example_client, ev, data){
   while(1) {
   
   	printf("while coap\n");
-  	//PROCESS_WAIT_UNTIL(rpl_add);
   	PROCESS_YIELD();
   	printf("timer wait\n");
   	if((ev == PROCESS_EVENT_TIMER && data == &et) || 
@@ -131,7 +128,7 @@ PROCESS_THREAD(er_example_client, ev, data){
 	  }
 	  
 	  else{
-	  	printf("no rpl add\n");
+	  	printf("no rpl address\n");
   	 }
 
 	  etimer_reset(&et);
@@ -139,5 +136,15 @@ PROCESS_THREAD(er_example_client, ev, data){
 	
   }
   
+  PROCESS_END();
+}
+
+/*---------------------------------------------------------------------------*/
+PROCESS_THREAD(coap_server, ev, data){
+  PROCESS_BEGIN();
+
+  LOG_INFO("Starting Erbium Example Server\n");  
+  coap_activate_resource(&res_power, "power");
+  coap_activate_resource(&res_temperature, "temperature");
   PROCESS_END();
 }

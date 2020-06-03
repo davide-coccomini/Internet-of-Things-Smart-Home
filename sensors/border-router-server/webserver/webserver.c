@@ -56,7 +56,7 @@ static int blen;
  * Multiple connections can result in interleaved tcp segments since
  * a single static buffer is used for all segments.
  */
-#include "../server/webserver/httpd-simple.h"
+#include "../sensor/webserver/httpd-simple.h"
 
 /*---------------------------------------------------------------------------*/
 static void
