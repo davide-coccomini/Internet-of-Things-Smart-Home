@@ -6,15 +6,12 @@
 #include "sys/log.h"
 #define LOG_MODULE "App"
 #define LOG_LEVEL LOG_LEVEL_APP
-static char outlets_avl[][15] = {
+static char outlets_avl[6][15] = {
         "fridge, ",
-        "wmachine, ",
-        "oven, ",
-        "microwave, ",
-        "tv, ",
+        "oven, "
     };
-static int actual_outlets = 5;
-static int max_outlets = 20;
+static int actual_outlets = 2;
+static int max_outlets = 7;
 static void res_post_handler(coap_message_t *request, coap_message_t *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset);
 static void res_put_handler(coap_message_t *request, coap_message_t *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset);
 static void res_get_handler(coap_message_t *request, coap_message_t *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset);
@@ -22,7 +19,7 @@ static void res_get_handler(coap_message_t *request, coap_message_t *response, u
 /* A simple actuator example, depending on the color query parameter and post variable mode, corresponding led is activated or deactivated */
 RESOURCE(res_power,
          "title=\"Power: ?outlet=0..\" POST/PUT name=<name>&value=<value>\";rt=\"Control\"",
-		 res_get_handler,
+	 res_get_handler,
          res_post_handler,
          res_put_handler,
          NULL);
@@ -33,7 +30,7 @@ static void res_post_handler(coap_message_t *request, coap_message_t *response, 
     char new_outlet[15];
     sprintf(new_outlet, "%s, ", name);
     strcpy(outlets_avl[actual_outlets], new_outlet);
-    actual_outlets +=1;
+    actual_outlets += 1;
     coap_set_status_code(response, CREATED_2_01);
   }else{
     coap_set_status_code(response, BAD_REQUEST_4_00);
@@ -43,9 +40,9 @@ static void res_put_handler(coap_message_t *request, coap_message_t *response, u
 	size_t len = 0;
 	const char *text = NULL;
 	char outlet[15];
-    memset(outlet, 0, 15);
+    	memset(outlet, 0, 15);
 	char power[32];
-    memset(power, 0, 32);
+    	memset(power, 0, 32);
 	int success_1 = 0;
 	int success_2 = 0;
 
@@ -87,11 +84,12 @@ static void res_get_handler(coap_message_t *request, coap_message_t *response, u
 	length = sizeof(outlets_avl);
 	memcpy(buffer, outlets_avl, length);
     }
-  }else{
-	 length = sizeof(outlets_avl);
-	 memcpy(buffer, outlets_avl, actual_outlets+1);
+  } 
+  else{
+	length = sizeof(outlets_avl);
+	memcpy(buffer, outlets_avl, length);
   }
-  coap_set_header_content_format(response, TEXT_PLAIN); /* text/plain is the default, hence this option could be omitted. */
+  coap_set_header_content_format(response, TEXT_PLAIN);
   coap_set_header_etag(response, (uint8_t *)&length, 1);
   coap_set_payload(response, buffer, length);
 }
