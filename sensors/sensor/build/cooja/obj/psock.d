@@ -1,5 +1,4 @@
 build/cooja/obj/psock.o: ../../../../os/net/ipv6/psock.c \
- ../../../../os/services/rpl-border-router/module-macros.h \
  ../../../../os/net/app-layer/coap/module-macros.h \
  ../../../../os/net/ipv6/psock.h ../../../../os/contiki.h \
  ../../../../arch/platform/cooja/./contiki-conf.h project-conf.h \
@@ -39,7 +38,6 @@ build/cooja/obj/psock.o: ../../../../os/net/ipv6/psock.c \
  ../../../../os/net/ipv6/tcp-socket.h ../../../../os/net/ipv6/uip.h \
  ../../../../os/net/netstack.h
 ../../../../os/net/ipv6/psock.c :
- ../../../../os/services/rpl-border-router/module-macros.h :
  ../../../../os/net/app-layer/coap/module-macros.h :
  ../../../../os/net/ipv6/psock.h ../../../../os/contiki.h :
  ../../../../arch/platform/cooja/./contiki-conf.h project-conf.h :

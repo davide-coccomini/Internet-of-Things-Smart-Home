@@ -1,6 +1,5 @@
 build/cooja/obj/rpl-ext-header.o: \
  ../../../../os/net/routing/rpl-lite/rpl-ext-header.c \
- ../../../../os/services/rpl-border-router/module-macros.h \
  ../../../../os/net/app-layer/coap/module-macros.h \
  ../../../../os/net/routing/routing.h ../../../../os/contiki.h \
  ../../../../arch/platform/cooja/./contiki-conf.h project-conf.h \
@@ -46,7 +45,6 @@ build/cooja/obj/rpl-ext-header.o: \
  ../../../../os/net/mac/tsch/tsch-conf.h ../../../../os/sys/log.h \
  ../../../../os/sys/log-conf.h
  ../../../../os/net/routing/rpl-lite/rpl-ext-header.c :
- ../../../../os/services/rpl-border-router/module-macros.h :
  ../../../../os/net/app-layer/coap/module-macros.h :
  ../../../../os/net/routing/routing.h ../../../../os/contiki.h :
  ../../../../arch/platform/cooja/./contiki-conf.h project-conf.h :

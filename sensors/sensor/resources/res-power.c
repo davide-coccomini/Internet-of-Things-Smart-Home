@@ -6,7 +6,7 @@
 #include "sys/log.h"
 #define LOG_MODULE "App"
 #define LOG_LEVEL LOG_LEVEL_APP
-static char outlets_avl[6][15] = {
+static char outlets_avl[][15] = {
         "fridge, ",
         "wmachine, ",
         "oven, ",
@@ -14,7 +14,7 @@ static char outlets_avl[6][15] = {
         "tv, ",
     };
 static int actual_outlets = 5;
-static int max_outlets = 7;
+static int max_outlets = 20;
 static void res_post_handler(coap_message_t *request, coap_message_t *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset);
 static void res_put_handler(coap_message_t *request, coap_message_t *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset);
 static void res_get_handler(coap_message_t *request, coap_message_t *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset);
@@ -39,7 +39,6 @@ static void res_post_handler(coap_message_t *request, coap_message_t *response, 
     coap_set_status_code(response, BAD_REQUEST_4_00);
   }
 }
-
 static void res_put_handler(coap_message_t *request, coap_message_t *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset){
 	size_t len = 0;
 	const char *text = NULL;
@@ -82,15 +81,15 @@ static void res_get_handler(coap_message_t *request, coap_message_t *response, u
   if(coap_get_query_variable(request, "outlet", &outlet)) {
     index = atoi(outlet);
     if(index > 0 && index < actual_outlets+1) {
-      length = sizeof(outlets_avl[index-1]);
-      memcpy(buffer, outlets_avl[index-1], length);
+      	length = sizeof(outlets_avl[index-1]);
+      	memcpy(buffer, outlets_avl[index-1], length);
     } else {
-    length = sizeof(outlets_avl);
-    memcpy(buffer, outlets_avl, length);
+	length = sizeof(outlets_avl);
+	memcpy(buffer, outlets_avl, length);
     }
   }else{
 	 length = sizeof(outlets_avl);
-	 memcpy(buffer, outlets_avl, length);
+	 memcpy(buffer, outlets_avl, actual_outlets+1);
   }
   coap_set_header_content_format(response, TEXT_PLAIN); /* text/plain is the default, hence this option could be omitted. */
   coap_set_header_etag(response, (uint8_t *)&length, 1);

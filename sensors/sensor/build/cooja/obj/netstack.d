@@ -1,5 +1,4 @@
 build/cooja/obj/netstack.o: ../../../../os/net/netstack.c \
- ../../../../os/services/rpl-border-router/module-macros.h \
  ../../../../os/net/app-layer/coap/module-macros.h \
  ../../../../os/net/netstack.h ../../../../os/contiki.h \
  ../../../../arch/platform/cooja/./contiki-conf.h project-conf.h \
@@ -20,7 +19,6 @@ build/cooja/obj/netstack.o: ../../../../os/net/netstack.c \
  ../../../../os/net/mac/framer/framer.h ../../../../os/net/linkaddr.h \
  ../../../../os/lib/list.h
 ../../../../os/net/netstack.c :
- ../../../../os/services/rpl-border-router/module-macros.h :
  ../../../../os/net/app-layer/coap/module-macros.h :
  ../../../../os/net/netstack.h ../../../../os/contiki.h :
  ../../../../arch/platform/cooja/./contiki-conf.h project-conf.h :

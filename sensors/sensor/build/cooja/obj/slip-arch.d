@@ -1,6 +1,5 @@
 build/cooja/obj/slip-arch.o: \
  ../../../../arch/platform/cooja/./slip-arch.c \
- ../../../../os/services/rpl-border-router/module-macros.h \
  ../../../../os/net/app-layer/coap/module-macros.h \
  ../../../../os/dev/slip.h ../../../../os/contiki.h \
  ../../../../arch/platform/cooja/./contiki-conf.h project-conf.h \
@@ -19,7 +18,6 @@ build/cooja/obj/slip-arch.o: \
  ../../../../os/sys/pt.h ../../../../os/sys/clock.h \
  ../../../../arch/platform/cooja/./dev/rs232.h
  ../../../../arch/platform/cooja/./slip-arch.c :
- ../../../../os/services/rpl-border-router/module-macros.h :
  ../../../../os/net/app-layer/coap/module-macros.h :
  ../../../../os/dev/slip.h ../../../../os/contiki.h :
  ../../../../arch/platform/cooja/./contiki-conf.h project-conf.h :

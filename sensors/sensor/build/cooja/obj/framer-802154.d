@@ -1,6 +1,5 @@
 build/cooja/obj/framer-802154.o: \
  ../../../../os/net/mac/framer/framer-802154.c \
- ../../../../os/services/rpl-border-router/module-macros.h \
  ../../../../os/net/app-layer/coap/module-macros.h \
  ../../../../os/net/mac/framer/framer-802154.h \
  ../../../../os/net/packetbuf.h ../../../../os/contiki.h \
@@ -27,7 +26,6 @@ build/cooja/obj/framer-802154.o: \
  ../../../../os/net/mac/framer/framer.h ../../../../os/lib/random.h \
  ../../../../os/sys/log.h ../../../../os/sys/log-conf.h
  ../../../../os/net/mac/framer/framer-802154.c :
- ../../../../os/services/rpl-border-router/module-macros.h :
  ../../../../os/net/app-layer/coap/module-macros.h :
  ../../../../os/net/mac/framer/framer-802154.h :
  ../../../../os/net/packetbuf.h ../../../../os/contiki.h :

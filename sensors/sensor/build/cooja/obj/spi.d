@@ -1,5 +1,4 @@
 build/cooja/obj/spi.o: ../../../../os/dev/spi.c \
- ../../../../os/services/rpl-border-router/module-macros.h \
  ../../../../os/net/app-layer/coap/module-macros.h \
  ../../../../os/dev/spi.h ../../../../os/contiki.h \
  ../../../../arch/platform/cooja/./contiki-conf.h project-conf.h \
@@ -19,7 +18,6 @@ build/cooja/obj/spi.o: ../../../../os/dev/spi.c \
  ../../../../os/dev/gpio-hal.h \
  ../../../../arch/platform/cooja/./dev/gpio-hal-arch.h
 ../../../../os/dev/spi.c :
- ../../../../os/services/rpl-border-router/module-macros.h :
  ../../../../os/net/app-layer/coap/module-macros.h :
  ../../../../os/dev/spi.h ../../../../os/contiki.h :
  ../../../../arch/platform/cooja/./contiki-conf.h project-conf.h :

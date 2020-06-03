@@ -1,5 +1,4 @@
 build/cooja/obj/res-temperature.o: resources/res-temperature.c \
- ../../../../os/services/rpl-border-router/module-macros.h \
  ../../../../os/net/app-layer/coap/module-macros.h \
  ../../../../os/contiki.h \
  ../../../../arch/platform/cooja/./contiki-conf.h project-conf.h \
@@ -33,7 +32,6 @@ build/cooja/obj/res-temperature.o: resources/res-temperature.c \
  ../../../../os/net/app-layer/coap/coap-observe-client.h \
  ../../../../os/sys/log.h ../../../../os/sys/log-conf.h
 resources/res-temperature.c :
- ../../../../os/services/rpl-border-router/module-macros.h :
  ../../../../os/net/app-layer/coap/module-macros.h :
  ../../../../os/contiki.h :
  ../../../../arch/platform/cooja/./contiki-conf.h project-conf.h :

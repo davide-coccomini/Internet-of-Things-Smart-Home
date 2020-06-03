@@ -1,5 +1,4 @@
 build/cooja/obj/circular-list.o: ../../../../os/lib/circular-list.c \
- ../../../../os/services/rpl-border-router/module-macros.h \
  ../../../../os/net/app-layer/coap/module-macros.h \
  ../../../../os/contiki.h \
  ../../../../arch/platform/cooja/./contiki-conf.h project-conf.h \
@@ -18,7 +17,6 @@ build/cooja/obj/circular-list.o: ../../../../os/lib/circular-list.c \
  ../../../../os/sys/pt.h ../../../../os/sys/clock.h \
  ../../../../os/lib/circular-list.h
 ../../../../os/lib/circular-list.c :
- ../../../../os/services/rpl-border-router/module-macros.h :
  ../../../../os/net/app-layer/coap/module-macros.h :
  ../../../../os/contiki.h :
  ../../../../arch/platform/cooja/./contiki-conf.h project-conf.h :

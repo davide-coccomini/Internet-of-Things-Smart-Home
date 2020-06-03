@@ -1,6 +1,5 @@
 build/cooja/obj/gpio-hal-arch.o: \
  ../../../../arch/platform/cooja/dev/gpio-hal-arch.c \
- ../../../../os/services/rpl-border-router/module-macros.h \
  ../../../../os/net/app-layer/coap/module-macros.h \
  ../../../../os/contiki.h \
  ../../../../arch/platform/cooja/./contiki-conf.h project-conf.h \
@@ -24,7 +23,6 @@ build/cooja/obj/gpio-hal-arch.o: \
  ../../../../os/net/ipv6/uipopt.h ../../../../os/net/ipv6/uipbuf.h \
  ../../../../os/net/ipv6/tcpip.h
  ../../../../arch/platform/cooja/dev/gpio-hal-arch.c :
- ../../../../os/services/rpl-border-router/module-macros.h :
  ../../../../os/net/app-layer/coap/module-macros.h :
  ../../../../os/contiki.h :
  ../../../../arch/platform/cooja/./contiki-conf.h project-conf.h :

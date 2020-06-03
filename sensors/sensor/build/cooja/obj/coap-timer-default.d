@@ -1,6 +1,5 @@
 build/cooja/obj/coap-timer-default.o: \
  ../../../../os/net/app-layer/coap/coap-timer-default.c \
- ../../../../os/services/rpl-border-router/module-macros.h \
  ../../../../os/net/app-layer/coap/module-macros.h \
  ../../../../os/net/app-layer/coap/coap-timer.h ../../../../os/contiki.h \
  ../../../../arch/platform/cooja/./contiki-conf.h project-conf.h \
@@ -23,7 +22,6 @@ build/cooja/obj/coap-timer-default.o: \
  ../../../../os/net/ipv6/uipbuf.h ../../../../os/net/ipv6/tcpip.h \
  ../../../../os/net/app-layer/coap/coap-endpoint.h
  ../../../../os/net/app-layer/coap/coap-timer-default.c :
- ../../../../os/services/rpl-border-router/module-macros.h :
  ../../../../os/net/app-layer/coap/module-macros.h :
  ../../../../os/net/app-layer/coap/coap-timer.h ../../../../os/contiki.h :
  ../../../../arch/platform/cooja/./contiki-conf.h project-conf.h :

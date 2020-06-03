@@ -1,5 +1,4 @@
 build/cooja/obj/moteid.o: ../../../../arch/platform/cooja/dev/moteid.c \
- ../../../../os/services/rpl-border-router/module-macros.h \
  ../../../../os/net/app-layer/coap/module-macros.h \
  ../../../../arch/platform/cooja/./dev/moteid.h \
  ../../../../arch/platform/cooja/./lib/simEnvChange.h \
@@ -20,7 +19,6 @@ build/cooja/obj/moteid.o: ../../../../arch/platform/cooja/dev/moteid.c \
  ../../../../os/sys/pt.h ../../../../os/sys/clock.h \
  ../../../../os/lib/random.h
 ../../../../arch/platform/cooja/dev/moteid.c :
- ../../../../os/services/rpl-border-router/module-macros.h :
  ../../../../os/net/app-layer/coap/module-macros.h :
  ../../../../arch/platform/cooja/./dev/moteid.h :
  ../../../../arch/platform/cooja/./lib/simEnvChange.h :

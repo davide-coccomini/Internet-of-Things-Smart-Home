@@ -1,5 +1,4 @@
 build/cooja/obj/link-stats.o: ../../../../os/net/link-stats.c \
- ../../../../os/services/rpl-border-router/module-macros.h \
  ../../../../os/net/app-layer/coap/module-macros.h \
  ../../../../os/contiki.h \
  ../../../../arch/platform/cooja/./contiki-conf.h project-conf.h \
@@ -28,7 +27,6 @@ build/cooja/obj/link-stats.o: ../../../../os/net/link-stats.c \
  ../../../../os/net/link-stats.h ../../../../os/sys/log.h \
  ../../../../os/sys/log-conf.h
 ../../../../os/net/link-stats.c :
- ../../../../os/services/rpl-border-router/module-macros.h :
  ../../../../os/net/app-layer/coap/module-macros.h :
  ../../../../os/contiki.h :
  ../../../../arch/platform/cooja/./contiki-conf.h project-conf.h :

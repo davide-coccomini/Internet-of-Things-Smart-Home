@@ -1,6 +1,5 @@
 build/cooja/obj/rpl-dag-root.o: \
  ../../../../os/net/routing/rpl-lite/rpl-dag-root.c \
- ../../../../os/services/rpl-border-router/module-macros.h \
  ../../../../os/net/app-layer/coap/module-macros.h \
  ../../../../os/contiki.h \
  ../../../../arch/platform/cooja/./contiki-conf.h project-conf.h \
@@ -53,7 +52,6 @@ build/cooja/obj/rpl-dag-root.o: \
  ../../../../os/net/routing/rpl-lite/rpl-timers.h \
  ../../../../os/sys/log.h ../../../../os/sys/log-conf.h
  ../../../../os/net/routing/rpl-lite/rpl-dag-root.c :
- ../../../../os/services/rpl-border-router/module-macros.h :
  ../../../../os/net/app-layer/coap/module-macros.h :
  ../../../../os/contiki.h :
  ../../../../arch/platform/cooja/./contiki-conf.h project-conf.h :

@@ -1,5 +1,4 @@
 build/cooja/obj/contiki-main.o: ../../../../os/contiki-main.c \
- ../../../../os/services/rpl-border-router/module-macros.h \
  ../../../../os/net/app-layer/coap/module-macros.h \
  ../../../../os/contiki.h \
  ../../../../arch/platform/cooja/./contiki-conf.h project-conf.h \
@@ -96,7 +95,6 @@ build/cooja/obj/contiki-main.o: ../../../../os/contiki-main.c \
  ../../../../os/services/simple-energest/simple-energest.h \
  ../../../../os/services/tsch-cs/tsch-cs.h ../../../../os/sys/log.h
 ../../../../os/contiki-main.c :
- ../../../../os/services/rpl-border-router/module-macros.h :
  ../../../../os/net/app-layer/coap/module-macros.h :
  ../../../../os/contiki.h :
  ../../../../arch/platform/cooja/./contiki-conf.h project-conf.h :

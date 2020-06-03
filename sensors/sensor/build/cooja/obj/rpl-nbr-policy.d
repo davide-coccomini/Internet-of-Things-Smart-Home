@@ -1,6 +1,5 @@
 build/cooja/obj/rpl-nbr-policy.o: \
  ../../../../os/net/routing/rpl-lite/rpl-nbr-policy.c \
- ../../../../os/services/rpl-border-router/module-macros.h \
  ../../../../os/net/app-layer/coap/module-macros.h \
  ../../../../os/net/routing/rpl-lite/rpl.h ../../../../os/net/ipv6/uip.h \
  ../../../../os/net/ipv6/uipopt.h ../../../../os/contiki.h \
@@ -40,7 +39,6 @@ build/cooja/obj/rpl-nbr-policy.o: \
  ../../../../os/net/routing/rpl-lite/rpl-timers.h \
  ../../../../os/sys/log.h ../../../../os/sys/log-conf.h
  ../../../../os/net/routing/rpl-lite/rpl-nbr-policy.c :
- ../../../../os/services/rpl-border-router/module-macros.h :
  ../../../../os/net/app-layer/coap/module-macros.h :
  ../../../../os/net/routing/rpl-lite/rpl.h ../../../../os/net/ipv6/uip.h :
  ../../../../os/net/ipv6/uipopt.h ../../../../os/contiki.h :

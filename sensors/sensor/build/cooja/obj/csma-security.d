@@ -1,6 +1,5 @@
 build/cooja/obj/csma-security.o: \
  ../../../../os/net/mac/csma/csma-security.c \
- ../../../../os/services/rpl-border-router/module-macros.h \
  ../../../../os/net/app-layer/coap/module-macros.h \
  ../../../../os/contiki.h \
  ../../../../arch/platform/cooja/./contiki-conf.h project-conf.h \
@@ -32,7 +31,6 @@ build/cooja/obj/csma-security.o: \
  ../../../../os/net/mac/csma/ccm-star-packetbuf.h \
  ../../../../os/sys/log.h ../../../../os/sys/log-conf.h
  ../../../../os/net/mac/csma/csma-security.c :
- ../../../../os/services/rpl-border-router/module-macros.h :
  ../../../../os/net/app-layer/coap/module-macros.h :
  ../../../../os/contiki.h :
  ../../../../arch/platform/cooja/./contiki-conf.h project-conf.h :

@@ -1,5 +1,4 @@
 build/cooja/obj/uip-ds6-nbr.o: ../../../../os/net/ipv6/uip-ds6-nbr.c \
- ../../../../os/services/rpl-border-router/module-macros.h \
  ../../../../os/net/app-layer/coap/module-macros.h \
  ../../../../os/lib/list.h ../../../../os/net/link-stats.h \
  ../../../../os/net/linkaddr.h ../../../../os/contiki.h \
@@ -33,7 +32,6 @@ build/cooja/obj/uip-ds6-nbr.o: ../../../../os/net/ipv6/uip-ds6-nbr.c \
  ../../../../os/net/routing/routing.h ../../../../os/net/ipv6/uip-sr.h \
  ../../../../os/sys/log.h ../../../../os/sys/log-conf.h
 ../../../../os/net/ipv6/uip-ds6-nbr.c :
- ../../../../os/services/rpl-border-router/module-macros.h :
  ../../../../os/net/app-layer/coap/module-macros.h :
  ../../../../os/lib/list.h ../../../../os/net/link-stats.h :
  ../../../../os/net/linkaddr.h ../../../../os/contiki.h :

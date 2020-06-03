@@ -1,6 +1,5 @@
 build/cooja/obj/vib-sensor.o: \
  ../../../../arch/platform/cooja/dev/vib-sensor.c \
- ../../../../os/services/rpl-border-router/module-macros.h \
  ../../../../os/net/app-layer/coap/module-macros.h \
  ../../../../arch/platform/cooja/./dev/vib-sensor.h \
  ../../../../os/lib/sensors.h ../../../../os/contiki.h \
@@ -20,7 +19,6 @@ build/cooja/obj/vib-sensor.o: \
  ../../../../os/sys/pt.h ../../../../os/sys/clock.h \
  ../../../../arch/platform/cooja/./lib/simEnvChange.h
  ../../../../arch/platform/cooja/dev/vib-sensor.c :
- ../../../../os/services/rpl-border-router/module-macros.h :
  ../../../../os/net/app-layer/coap/module-macros.h :
  ../../../../arch/platform/cooja/./dev/vib-sensor.h :
  ../../../../os/lib/sensors.h ../../../../os/contiki.h :

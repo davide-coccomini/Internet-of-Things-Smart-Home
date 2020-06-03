@@ -1,6 +1,5 @@
 build/cooja/obj/coap-observe-client.o: \
  ../../../../os/net/app-layer/coap/coap-observe-client.c \
- ../../../../os/services/rpl-border-router/module-macros.h \
  ../../../../os/net/app-layer/coap/module-macros.h \
  ../../../../os/net/app-layer/coap/coap.h \
  ../../../../os/net/app-layer/coap/coap-constants.h \
@@ -32,7 +31,6 @@ build/cooja/obj/coap-observe-client.o: \
  ../../../../os/net/app-layer/coap/coap-separate.h \
  ../../../../os/lib/memb.h ../../../../os/lib/list.h
  ../../../../os/net/app-layer/coap/coap-observe-client.c :
- ../../../../os/services/rpl-border-router/module-macros.h :
  ../../../../os/net/app-layer/coap/module-macros.h :
  ../../../../os/net/app-layer/coap/coap.h :
  ../../../../os/net/app-layer/coap/coap-constants.h :

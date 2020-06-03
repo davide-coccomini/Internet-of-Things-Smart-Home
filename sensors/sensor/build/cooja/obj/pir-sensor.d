@@ -1,6 +1,5 @@
 build/cooja/obj/pir-sensor.o: \
  ../../../../arch/platform/cooja/dev/pir-sensor.c \
- ../../../../os/services/rpl-border-router/module-macros.h \
  ../../../../os/net/app-layer/coap/module-macros.h \
  ../../../../arch/platform/cooja/./dev/pir-sensor.h \
  ../../../../os/lib/sensors.h ../../../../os/contiki.h \
@@ -20,7 +19,6 @@ build/cooja/obj/pir-sensor.o: \
  ../../../../os/sys/pt.h ../../../../os/sys/clock.h \
  ../../../../arch/platform/cooja/./lib/simEnvChange.h
  ../../../../arch/platform/cooja/dev/pir-sensor.c :
- ../../../../os/services/rpl-border-router/module-macros.h :
  ../../../../os/net/app-layer/coap/module-macros.h :
  ../../../../arch/platform/cooja/./dev/pir-sensor.h :
  ../../../../os/lib/sensors.h ../../../../os/contiki.h :

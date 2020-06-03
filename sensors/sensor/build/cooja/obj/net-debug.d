@@ -1,5 +1,4 @@
 build/cooja/obj/net-debug.o: ../../../../os/net/net-debug.c \
- ../../../../os/services/rpl-border-router/module-macros.h \
  ../../../../os/net/app-layer/coap/module-macros.h \
  ../../../../os/net/net-debug.h ../../../../os/net/ipv6/uip.h \
  ../../../../os/net/ipv6/uipopt.h ../../../../os/contiki.h \
@@ -20,7 +19,6 @@ build/cooja/obj/net-debug.o: ../../../../os/net/net-debug.c \
  ../../../../os/net/ipv6/uipbuf.h ../../../../os/net/linkaddr.h \
  ../../../../os/net/ipv6/tcpip.h
 ../../../../os/net/net-debug.c :
- ../../../../os/services/rpl-border-router/module-macros.h :
  ../../../../os/net/app-layer/coap/module-macros.h :
  ../../../../os/net/net-debug.h ../../../../os/net/ipv6/uip.h :
  ../../../../os/net/ipv6/uipopt.h ../../../../os/contiki.h :

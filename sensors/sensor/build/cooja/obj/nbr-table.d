@@ -1,5 +1,4 @@
 build/cooja/obj/nbr-table.o: ../../../../os/net/nbr-table.c \
- ../../../../os/services/rpl-border-router/module-macros.h \
  ../../../../os/net/app-layer/coap/module-macros.h \
  ../../../../os/contiki.h \
  ../../../../arch/platform/cooja/./contiki-conf.h project-conf.h \
@@ -21,7 +20,6 @@ build/cooja/obj/nbr-table.o: ../../../../os/net/nbr-table.c \
  ../../../../os/net/netstack.h ../../../../os/net/mac/mac.h \
  ../../../../os/dev/radio.h ../../../../os/net/mac/framer/framer.h
 ../../../../os/net/nbr-table.c :
- ../../../../os/services/rpl-border-router/module-macros.h :
  ../../../../os/net/app-layer/coap/module-macros.h :
  ../../../../os/contiki.h :
  ../../../../arch/platform/cooja/./contiki-conf.h project-conf.h :

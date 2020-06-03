@@ -1,5 +1,4 @@
 build/cooja/obj/mac-sequence.o: ../../../../os/net/mac/mac-sequence.c \
- ../../../../os/services/rpl-border-router/module-macros.h \
  ../../../../os/net/app-layer/coap/module-macros.h \
  ../../../../os/contiki-net.h ../../../../os/contiki.h \
  ../../../../arch/platform/cooja/./contiki-conf.h project-conf.h \
@@ -43,7 +42,6 @@ build/cooja/obj/mac-sequence.o: ../../../../os/net/mac/mac-sequence.c \
  ../../../../os/net/mac/csma/csma-security.h \
  ../../../../os/net/mac/tsch/tsch-conf.h
 ../../../../os/net/mac/mac-sequence.c :
- ../../../../os/services/rpl-border-router/module-macros.h :
  ../../../../os/net/app-layer/coap/module-macros.h :
  ../../../../os/contiki-net.h ../../../../os/contiki.h :
  ../../../../arch/platform/cooja/./contiki-conf.h project-conf.h :

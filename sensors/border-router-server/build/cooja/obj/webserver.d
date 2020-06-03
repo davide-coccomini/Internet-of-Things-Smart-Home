@@ -24,7 +24,7 @@ build/cooja/obj/webserver.o: webserver/webserver.c \
  ../../../../os/dev/radio.h ../../../../os/net/mac/framer/framer.h \
  ../../../../os/net/ipv6/uip-packetqueue.h ../../../../os/sys/ctimer.h \
  ../../../../os/net/ipv6/uip-ds6-route.h ../../../../os/lib/list.h \
- ../../../../os/net/ipv6/uip-sr.h ../sensor/webserver/httpd-simple.h \
+ ../../../../os/net/ipv6/uip-sr.h webserver/../webserver/httpd-simple.h \
  ../../../../os/contiki-net.h ../../../../os/contiki.h \
  ../../../../os/net/ipv6/tcpip.h ../../../../os/net/ipv6/uip.h \
  ../../../../os/net/ipv6/uiplib.h \
@@ -64,7 +64,7 @@ webserver/webserver.c :
  ../../../../os/dev/radio.h ../../../../os/net/mac/framer/framer.h :
  ../../../../os/net/ipv6/uip-packetqueue.h ../../../../os/sys/ctimer.h :
  ../../../../os/net/ipv6/uip-ds6-route.h ../../../../os/lib/list.h :
- ../../../../os/net/ipv6/uip-sr.h ../sensor/webserver/httpd-simple.h :
+ ../../../../os/net/ipv6/uip-sr.h webserver/../webserver/httpd-simple.h :
  ../../../../os/contiki-net.h ../../../../os/contiki.h :
  ../../../../os/net/ipv6/tcpip.h ../../../../os/net/ipv6/uip.h :
  ../../../../os/net/ipv6/uiplib.h :

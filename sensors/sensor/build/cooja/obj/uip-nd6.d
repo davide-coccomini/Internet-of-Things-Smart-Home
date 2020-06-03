@@ -1,5 +1,4 @@
 build/cooja/obj/uip-nd6.o: ../../../../os/net/ipv6/uip-nd6.c \
- ../../../../os/services/rpl-border-router/module-macros.h \
  ../../../../os/net/app-layer/coap/module-macros.h \
  ../../../../os/net/ipv6/uip-icmp6.h ../../../../os/net/ipv6/uip.h \
  ../../../../os/net/ipv6/uipopt.h ../../../../os/contiki.h \
@@ -28,7 +27,6 @@ build/cooja/obj/uip-nd6.o: ../../../../os/net/ipv6/uip-nd6.c \
  ../../../../os/net/ipv6/uip-nameserver.h ../../../../os/lib/random.h \
  ../../../../os/sys/log.h ../../../../os/sys/log-conf.h
 ../../../../os/net/ipv6/uip-nd6.c :
- ../../../../os/services/rpl-border-router/module-macros.h :
  ../../../../os/net/app-layer/coap/module-macros.h :
  ../../../../os/net/ipv6/uip-icmp6.h ../../../../os/net/ipv6/uip.h :
  ../../../../os/net/ipv6/uipopt.h ../../../../os/contiki.h :

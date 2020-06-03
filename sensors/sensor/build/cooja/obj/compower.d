@@ -1,5 +1,4 @@
 build/cooja/obj/compower.o: ../../../../os/sys/compower.c \
- ../../../../os/services/rpl-border-router/module-macros.h \
  ../../../../os/net/app-layer/coap/module-macros.h \
  ../../../../os/contiki.h \
  ../../../../arch/platform/cooja/./contiki-conf.h project-conf.h \
@@ -25,7 +24,6 @@ build/cooja/obj/compower.o: ../../../../os/sys/compower.c \
  ../../../../os/net/mac/csma/csma-security.h \
  ../../../../os/net/mac/tsch/tsch-conf.h
 ../../../../os/sys/compower.c :
- ../../../../os/services/rpl-border-router/module-macros.h :
  ../../../../os/net/app-layer/coap/module-macros.h :
  ../../../../os/contiki.h :
  ../../../../arch/platform/cooja/./contiki-conf.h project-conf.h :

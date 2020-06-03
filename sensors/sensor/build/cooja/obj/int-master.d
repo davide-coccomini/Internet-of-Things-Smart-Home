@@ -1,6 +1,5 @@
 build/cooja/obj/int-master.o: \
  ../../../../arch/platform/cooja/./int-master.c \
- ../../../../os/services/rpl-border-router/module-macros.h \
  ../../../../os/net/app-layer/coap/module-macros.h \
  ../../../../os/contiki.h \
  ../../../../arch/platform/cooja/./contiki-conf.h project-conf.h \
@@ -19,7 +18,6 @@ build/cooja/obj/int-master.o: \
  ../../../../os/sys/pt.h ../../../../os/sys/clock.h \
  ../../../../os/sys/int-master.h
  ../../../../arch/platform/cooja/./int-master.c :
- ../../../../os/services/rpl-border-router/module-macros.h :
  ../../../../os/net/app-layer/coap/module-macros.h :
  ../../../../os/contiki.h :
  ../../../../arch/platform/cooja/./contiki-conf.h project-conf.h :

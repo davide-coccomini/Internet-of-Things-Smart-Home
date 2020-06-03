@@ -1,5 +1,4 @@
 build/cooja/obj/nullframer.o: ../../../../os/net/mac/framer/nullframer.c \
- ../../../../os/services/rpl-border-router/module-macros.h \
  ../../../../os/net/app-layer/coap/module-macros.h \
  ../../../../os/net/mac/framer/framer.h ../../../../os/net/packetbuf.h \
  ../../../../os/contiki.h \
@@ -24,7 +23,6 @@ build/cooja/obj/nullframer.o: ../../../../os/net/mac/framer/nullframer.c \
  ../../../../os/net/mac/csma/csma-security.h \
  ../../../../os/net/mac/tsch/tsch-conf.h
 ../../../../os/net/mac/framer/nullframer.c :
- ../../../../os/services/rpl-border-router/module-macros.h :
  ../../../../os/net/app-layer/coap/module-macros.h :
  ../../../../os/net/mac/framer/framer.h ../../../../os/net/packetbuf.h :
  ../../../../os/contiki.h :

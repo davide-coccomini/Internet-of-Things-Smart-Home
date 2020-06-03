@@ -1,6 +1,5 @@
 build/cooja/obj/frame802154e-ie.o: \
  ../../../../os/net/mac/framer/frame802154e-ie.c \
- ../../../../os/services/rpl-border-router/module-macros.h \
  ../../../../os/net/app-layer/coap/module-macros.h \
  ../../../../os/net/mac/framer/frame802154e-ie.h ../../../../os/contiki.h \
  ../../../../arch/platform/cooja/./contiki-conf.h project-conf.h \
@@ -33,7 +32,6 @@ build/cooja/obj/frame802154e-ie.o: \
  ../../../../os/net/mac/tsch/sixtop/sixtop.h \
  ../../../../os/net/mac/tsch/sixtop/sixp-pkt.h
  ../../../../os/net/mac/framer/frame802154e-ie.c :
- ../../../../os/services/rpl-border-router/module-macros.h :
  ../../../../os/net/app-layer/coap/module-macros.h :
  ../../../../os/net/mac/framer/frame802154e-ie.h ../../../../os/contiki.h :
  ../../../../arch/platform/cooja/./contiki-conf.h project-conf.h :

@@ -1,6 +1,5 @@
 build/cooja/obj/rpl-neighbor.o: \
  ../../../../os/net/routing/rpl-lite/rpl-neighbor.c \
- ../../../../os/services/rpl-border-router/module-macros.h \
  ../../../../os/net/app-layer/coap/module-macros.h \
  ../../../../os/contiki.h \
  ../../../../arch/platform/cooja/./contiki-conf.h project-conf.h \
@@ -41,7 +40,6 @@ build/cooja/obj/rpl-neighbor.o: \
  ../../../../os/net/link-stats.h ../../../../os/net/ipv6/uiplib.h \
  ../../../../os/sys/log.h ../../../../os/sys/log-conf.h
  ../../../../os/net/routing/rpl-lite/rpl-neighbor.c :
- ../../../../os/services/rpl-border-router/module-macros.h :
  ../../../../os/net/app-layer/coap/module-macros.h :
  ../../../../os/contiki.h :
  ../../../../arch/platform/cooja/./contiki-conf.h project-conf.h :

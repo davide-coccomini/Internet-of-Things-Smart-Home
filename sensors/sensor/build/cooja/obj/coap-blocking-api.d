@@ -1,6 +1,5 @@
 build/cooja/obj/coap-blocking-api.o: \
  ../../../../os/net/app-layer/coap/coap-blocking-api.c \
- ../../../../os/services/rpl-border-router/module-macros.h \
  ../../../../os/net/app-layer/coap/module-macros.h \
  ../../../../os/net/app-layer/coap/coap-engine.h \
  ../../../../os/net/app-layer/coap/coap.h \
@@ -35,7 +34,6 @@ build/cooja/obj/coap-blocking-api.o: \
  ../../../../os/net/app-layer/coap/coap-log.h ../../../../os/sys/log.h \
  ../../../../os/sys/log-conf.h
  ../../../../os/net/app-layer/coap/coap-blocking-api.c :
- ../../../../os/services/rpl-border-router/module-macros.h :
  ../../../../os/net/app-layer/coap/module-macros.h :
  ../../../../os/net/app-layer/coap/coap-engine.h :
  ../../../../os/net/app-layer/coap/coap.h :

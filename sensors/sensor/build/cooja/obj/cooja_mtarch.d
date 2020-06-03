@@ -1,6 +1,5 @@
 build/cooja/obj/cooja_mtarch.o: \
  ../../../../arch/platform/cooja/sys/cooja_mtarch.c \
- ../../../../os/services/rpl-border-router/module-macros.h \
  ../../../../os/net/app-layer/coap/module-macros.h \
  ../../../../arch/platform/cooja/./sys/cooja_mt.h \
  ../../../../os/contiki.h \
@@ -19,7 +18,6 @@ build/cooja/obj/cooja_mtarch.o: \
  ../../../../os/sys/clock.h \
  ../../../../arch/platform/cooja/./sys/cooja_mtarch.h
  ../../../../arch/platform/cooja/sys/cooja_mtarch.c :
- ../../../../os/services/rpl-border-router/module-macros.h :
  ../../../../os/net/app-layer/coap/module-macros.h :
  ../../../../arch/platform/cooja/./sys/cooja_mt.h :
  ../../../../os/contiki.h :

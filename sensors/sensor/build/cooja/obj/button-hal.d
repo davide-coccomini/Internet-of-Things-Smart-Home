@@ -1,5 +1,4 @@
 build/cooja/obj/button-hal.o: ../../../../os/dev/button-hal.c \
- ../../../../os/services/rpl-border-router/module-macros.h \
  ../../../../os/net/app-layer/coap/module-macros.h \
  ../../../../os/contiki.h \
  ../../../../arch/platform/cooja/./contiki-conf.h project-conf.h \
@@ -22,7 +21,6 @@ build/cooja/obj/button-hal.o: ../../../../os/dev/button-hal.c \
  ../../../../arch/platform/cooja/./dev/gpio-hal-arch.h \
  ../../../../os/dev/button-hal.h
 ../../../../os/dev/button-hal.c :
- ../../../../os/services/rpl-border-router/module-macros.h :
  ../../../../os/net/app-layer/coap/module-macros.h :
  ../../../../os/contiki.h :
  ../../../../arch/platform/cooja/./contiki-conf.h project-conf.h :

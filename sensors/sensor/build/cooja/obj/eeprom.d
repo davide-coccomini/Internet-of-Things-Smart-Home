@@ -1,5 +1,4 @@
 build/cooja/obj/eeprom.o: ../../../../arch/platform/cooja/dev/eeprom.c \
- ../../../../os/services/rpl-border-router/module-macros.h \
  ../../../../os/net/app-layer/coap/module-macros.h \
  ../../../../os/dev/eeprom.h \
  ../../../../arch/platform/cooja/./lib/simEnvChange.h \
@@ -19,7 +18,6 @@ build/cooja/obj/eeprom.o: ../../../../arch/platform/cooja/dev/eeprom.c \
  ../../../../arch/platform/cooja/./sys/cooja_mtarch.h \
  ../../../../os/sys/pt.h ../../../../os/sys/clock.h
 ../../../../arch/platform/cooja/dev/eeprom.c :
- ../../../../os/services/rpl-border-router/module-macros.h :
  ../../../../os/net/app-layer/coap/module-macros.h :
  ../../../../os/dev/eeprom.h :
  ../../../../arch/platform/cooja/./lib/simEnvChange.h :

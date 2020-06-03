@@ -1,6 +1,5 @@
 build/cooja/obj/uip-udp-packet.o: \
  ../../../../os/net/ipv6/uip-udp-packet.c \
- ../../../../os/services/rpl-border-router/module-macros.h \
  ../../../../os/net/app-layer/coap/module-macros.h \
  ../../../../os/contiki.h \
  ../../../../arch/platform/cooja/./contiki-conf.h project-conf.h \
@@ -29,7 +28,6 @@ build/cooja/obj/uip-udp-packet.o: \
  ../../../../os/net/ipv6/multicast/uip-mcast6-stats.h \
  ../../../../os/net/ipv6/multicast/mpl.h
  ../../../../os/net/ipv6/uip-udp-packet.c :
- ../../../../os/services/rpl-border-router/module-macros.h :
  ../../../../os/net/app-layer/coap/module-macros.h :
  ../../../../os/contiki.h :
  ../../../../arch/platform/cooja/./contiki-conf.h project-conf.h :

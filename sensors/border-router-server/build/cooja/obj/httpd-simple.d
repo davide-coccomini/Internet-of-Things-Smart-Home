@@ -1,6 +1,6 @@
 build/cooja/obj/httpd-simple.o: webserver/httpd-simple.c \
  ../../../../os/services/rpl-border-router/module-macros.h \
- ../sensor/webserver/httpd-simple.h ../../../../os/contiki-net.h \
+ webserver/../webserver/httpd-simple.h ../../../../os/contiki-net.h \
  ../../../../os/contiki.h \
  ../../../../arch/platform/cooja/./contiki-conf.h project-conf.h \
  ../../../../os/contiki-default-conf.h ../../../../os/sys/process.h \
@@ -40,7 +40,7 @@ build/cooja/obj/httpd-simple.o: webserver/httpd-simple.c \
  ../../../../os/net/netstack.h
 webserver/httpd-simple.c :
  ../../../../os/services/rpl-border-router/module-macros.h :
- ../sensor/webserver/httpd-simple.h ../../../../os/contiki-net.h :
+ webserver/../webserver/httpd-simple.h ../../../../os/contiki-net.h :
  ../../../../os/contiki.h :
  ../../../../arch/platform/cooja/./contiki-conf.h project-conf.h :
  ../../../../os/contiki-default-conf.h ../../../../os/sys/process.h :

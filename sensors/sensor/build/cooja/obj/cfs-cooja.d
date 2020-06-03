@@ -1,6 +1,5 @@
 build/cooja/obj/cfs-cooja.o: \
  ../../../../arch/platform/cooja/cfs/cfs-cooja.c \
- ../../../../os/services/rpl-border-router/module-macros.h \
  ../../../../os/net/app-layer/coap/module-macros.h \
  ../../../../arch/platform/cooja/./lib/simEnvChange.h \
  ../../../../os/contiki.h \
@@ -20,7 +19,6 @@ build/cooja/obj/cfs-cooja.o: \
  ../../../../os/sys/pt.h ../../../../os/sys/clock.h \
  ../../../../os/storage/cfs/cfs.h
  ../../../../arch/platform/cooja/cfs/cfs-cooja.c :
- ../../../../os/services/rpl-border-router/module-macros.h :
  ../../../../os/net/app-layer/coap/module-macros.h :
  ../../../../arch/platform/cooja/./lib/simEnvChange.h :
  ../../../../os/contiki.h :

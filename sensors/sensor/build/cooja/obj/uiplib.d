@@ -1,5 +1,4 @@
 build/cooja/obj/uiplib.o: ../../../../os/net/ipv6/uiplib.c \
- ../../../../os/services/rpl-border-router/module-macros.h \
  ../../../../os/net/app-layer/coap/module-macros.h \
  ../../../../os/net/ipv6/uip.h ../../../../os/net/ipv6/uipopt.h \
  ../../../../os/contiki.h \
@@ -22,7 +21,6 @@ build/cooja/obj/uiplib.o: ../../../../os/net/ipv6/uiplib.c \
  ../../../../os/net/ipv6/ip64-addr.h ../../../../os/sys/log.h \
  ../../../../os/sys/log-conf.h
 ../../../../os/net/ipv6/uiplib.c :
- ../../../../os/services/rpl-border-router/module-macros.h :
  ../../../../os/net/app-layer/coap/module-macros.h :
  ../../../../os/net/ipv6/uip.h ../../../../os/net/ipv6/uipopt.h :
  ../../../../os/contiki.h :

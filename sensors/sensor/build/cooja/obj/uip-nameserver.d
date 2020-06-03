@@ -1,6 +1,5 @@
 build/cooja/obj/uip-nameserver.o: \
  ../../../../os/net/ipv6/uip-nameserver.c \
- ../../../../os/services/rpl-border-router/module-macros.h \
  ../../../../os/net/app-layer/coap/module-macros.h \
  ../../../../os/contiki.h \
  ../../../../arch/platform/cooja/./contiki-conf.h project-conf.h \
@@ -41,7 +40,6 @@ build/cooja/obj/uip-nameserver.o: \
  ../../../../os/net/netstack.h ../../../../os/lib/memb.h \
  ../../../../os/sys/log.h ../../../../os/sys/log-conf.h
  ../../../../os/net/ipv6/uip-nameserver.c :
- ../../../../os/services/rpl-border-router/module-macros.h :
  ../../../../os/net/app-layer/coap/module-macros.h :
  ../../../../os/contiki.h :
  ../../../../arch/platform/cooja/./contiki-conf.h project-conf.h :

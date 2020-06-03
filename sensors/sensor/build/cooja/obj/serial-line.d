@@ -1,5 +1,4 @@
 build/cooja/obj/serial-line.o: ../../../../os/dev/serial-line.c \
- ../../../../os/services/rpl-border-router/module-macros.h \
  ../../../../os/net/app-layer/coap/module-macros.h \
  ../../../../os/dev/serial-line.h ../../../../os/contiki.h \
  ../../../../arch/platform/cooja/./contiki-conf.h project-conf.h \
@@ -18,7 +17,6 @@ build/cooja/obj/serial-line.o: ../../../../os/dev/serial-line.c \
  ../../../../os/sys/pt.h ../../../../os/sys/clock.h \
  ../../../../os/lib/ringbuf.h
 ../../../../os/dev/serial-line.c :
- ../../../../os/services/rpl-border-router/module-macros.h :
  ../../../../os/net/app-layer/coap/module-macros.h :
  ../../../../os/dev/serial-line.h ../../../../os/contiki.h :
  ../../../../arch/platform/cooja/./contiki-conf.h project-conf.h :

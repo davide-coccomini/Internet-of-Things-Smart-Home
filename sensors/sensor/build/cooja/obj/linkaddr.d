@@ -1,5 +1,4 @@
 build/cooja/obj/linkaddr.o: ../../../../os/net/linkaddr.c \
- ../../../../os/services/rpl-border-router/module-macros.h \
  ../../../../os/net/app-layer/coap/module-macros.h \
  ../../../../os/net/linkaddr.h ../../../../os/contiki.h \
  ../../../../arch/platform/cooja/./contiki-conf.h project-conf.h \
@@ -17,7 +16,6 @@ build/cooja/obj/linkaddr.o: ../../../../os/net/linkaddr.c \
  ../../../../arch/platform/cooja/./sys/cooja_mtarch.h \
  ../../../../os/sys/pt.h ../../../../os/sys/clock.h
 ../../../../os/net/linkaddr.c :
- ../../../../os/services/rpl-border-router/module-macros.h :
  ../../../../os/net/app-layer/coap/module-macros.h :
  ../../../../os/net/linkaddr.h ../../../../os/contiki.h :
  ../../../../arch/platform/cooja/./contiki-conf.h project-conf.h :

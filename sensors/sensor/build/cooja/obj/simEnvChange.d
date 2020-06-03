@@ -1,6 +1,5 @@
 build/cooja/obj/simEnvChange.o: \
  ../../../../arch/platform/cooja/lib/simEnvChange.c \
- ../../../../os/services/rpl-border-router/module-macros.h \
  ../../../../os/net/app-layer/coap/module-macros.h \
  ../../../../arch/platform/cooja/./lib/simEnvChange.h \
  ../../../../os/contiki.h \
@@ -19,7 +18,6 @@ build/cooja/obj/simEnvChange.o: \
  ../../../../arch/platform/cooja/./sys/cooja_mtarch.h \
  ../../../../os/sys/pt.h ../../../../os/sys/clock.h
  ../../../../arch/platform/cooja/lib/simEnvChange.c :
- ../../../../os/services/rpl-border-router/module-macros.h :
  ../../../../os/net/app-layer/coap/module-macros.h :
  ../../../../arch/platform/cooja/./lib/simEnvChange.h :
  ../../../../os/contiki.h :

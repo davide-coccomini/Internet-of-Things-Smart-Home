@@ -1,5 +1,4 @@
 build/cooja/obj/random.o: ../../../../os/lib/random.c \
- ../../../../os/services/rpl-border-router/module-macros.h \
  ../../../../os/net/app-layer/coap/module-macros.h \
  ../../../../os/lib/random.h ../../../../os/sys/clock.h \
  ../../../../os/contiki.h \
@@ -18,7 +17,6 @@ build/cooja/obj/random.o: ../../../../os/lib/random.c \
  ../../../../arch/platform/cooja/./sys/cooja_mtarch.h \
  ../../../../os/sys/pt.h ../../../../os/sys/clock.h
 ../../../../os/lib/random.c :
- ../../../../os/services/rpl-border-router/module-macros.h :
  ../../../../os/net/app-layer/coap/module-macros.h :
  ../../../../os/lib/random.h ../../../../os/sys/clock.h :
  ../../../../os/contiki.h :

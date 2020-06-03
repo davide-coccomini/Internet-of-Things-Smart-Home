@@ -1,5 +1,4 @@
 build/cooja/obj/csma.o: ../../../../os/net/mac/csma/csma.c \
- ../../../../os/services/rpl-border-router/module-macros.h \
  ../../../../os/net/app-layer/coap/module-macros.h \
  ../../../../os/net/mac/csma/csma.h ../../../../os/contiki.h \
  ../../../../arch/platform/cooja/./contiki-conf.h project-conf.h \
@@ -29,7 +28,6 @@ build/cooja/obj/csma.o: ../../../../os/net/mac/csma/csma.c \
  ../../../../os/net/mac/mac-sequence.h ../../../../os/sys/log.h \
  ../../../../os/sys/log-conf.h
 ../../../../os/net/mac/csma/csma.c :
- ../../../../os/services/rpl-border-router/module-macros.h :
  ../../../../os/net/app-layer/coap/module-macros.h :
  ../../../../os/net/mac/csma/csma.h ../../../../os/contiki.h :
  ../../../../arch/platform/cooja/./contiki-conf.h project-conf.h :

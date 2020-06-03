@@ -1,5 +1,4 @@
 build/cooja/obj/trickle-timer.o: ../../../../os/lib/trickle-timer.c \
- ../../../../os/services/rpl-border-router/module-macros.h \
  ../../../../os/net/app-layer/coap/module-macros.h \
  ../../../../os/contiki.h \
  ../../../../arch/platform/cooja/./contiki-conf.h project-conf.h \
@@ -19,7 +18,6 @@ build/cooja/obj/trickle-timer.o: ../../../../os/lib/trickle-timer.c \
  ../../../../os/lib/trickle-timer.h ../../../../os/sys/ctimer.h \
  ../../../../os/lib/random.h
 ../../../../os/lib/trickle-timer.c :
- ../../../../os/services/rpl-border-router/module-macros.h :
  ../../../../os/net/app-layer/coap/module-macros.h :
  ../../../../os/contiki.h :
  ../../../../arch/platform/cooja/./contiki-conf.h project-conf.h :
