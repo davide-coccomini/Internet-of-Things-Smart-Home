@@ -1,0 +1,7 @@
+package iot.unipi.cloudapp;
+
+import org.eclipse.californium.core.CoapResource;
+
+public class RegistrationResource extends CoapResource {
+
+}

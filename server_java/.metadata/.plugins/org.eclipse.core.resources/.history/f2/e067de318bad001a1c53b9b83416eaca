@@ -1,0 +1,10 @@
+package iot.unipi.cloudapp;
+
+import java.util.Date;
+
+public class SensorValue {
+	String name;
+	Double value;
+	Date timestamp;
+	String type;
+}

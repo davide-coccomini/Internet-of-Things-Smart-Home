@@ -13,4 +13,5 @@
 <item elementID="=iot.unipi.it/src\/test\/resources=/maven.pomderived=/true=/=/test=/true=/" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
 </workingSet>
 <workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1590314808742_2" label="Window Working Set" name="Aggregate for window 1590314808742"/>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1592061974487_3" label="Window Working Set" name="Aggregate for window 1592061974487"/>
 </workingSetManager>

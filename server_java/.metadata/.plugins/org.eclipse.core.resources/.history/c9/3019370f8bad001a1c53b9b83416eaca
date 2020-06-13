@@ -1,0 +1,5 @@
+package iot.unipi.cloudapp;
+
+public class SensorValue {
+
+}

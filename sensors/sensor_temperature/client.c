@@ -15,7 +15,7 @@
 #define UDP_CLIENT_PORT	8765
 #define UDP_SERVER_PORT	5678
 
-#define SERVER_EP "coap://[fd00::203:3:3:3]:5683"
+#define SERVER_EP "coap://[fd00::1]:5683"
 char *service_url = "/hello";
 #define TOGGLE_INTERVAL 10
 
@@ -25,7 +25,7 @@ static struct etimer et;
 
 bool rpl_add = false;
 
-extern coap_resource_t res_power;
+//extern coap_resource_t res_power;
 extern coap_resource_t res_temperature;
 
 /*---------------------------------------------------------------------------*/
@@ -77,9 +77,9 @@ PROCESS_THREAD(udp_client, ev, data){
       sprintf(buf, "Message %d from node %d", message_number, node_id);
       message_number++;
       simple_udp_sendto(&udp_conn, buf, strlen(buf) + 1, &dest_ipaddr);
-	  rpl_add = true;
-	  
-	  START_INTERVAL = 50;
+      rpl_add = true;
+  
+      START_INTERVAL = 50;
     } 
     else {
       LOG_INFO("Not reachable yet\n");
@@ -110,7 +110,7 @@ PROCESS_THREAD(coap_client, ev, data){
   	if((ev == PROCESS_EVENT_TIMER && data == &et) || 
 	      ev == PROCESS_EVENT_POLL) {
 	      
-      if(rpl_add == true){
+      	   if(rpl_add == true){
 	
 		  printf("--Toggle timer--\n");
 
@@ -141,10 +141,13 @@ PROCESS_THREAD(coap_client, ev, data){
 
 /*---------------------------------------------------------------------------*/
 PROCESS_THREAD(coap_server, ev, data){
-  PROCESS_BEGIN();
+  	PROCESS_BEGIN();
 
-  LOG_INFO("Starting Erbium Example Server\n");  
-  coap_activate_resource(&res_power, "power");
-  coap_activate_resource(&res_temperature, "temperature");
-  PROCESS_END();
+  	LOG_INFO("Starting Erbium Example Server\n");  
+  	//coap_activate_resource(&res_power, "power");
+  	coap_activate_resource(&res_temperature, "temperature");
+
+	
+
+  	PROCESS_END();
 }
