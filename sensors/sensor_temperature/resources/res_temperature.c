@@ -11,7 +11,7 @@ static char rooms_avl[6][15] = {
         "bedroom 1, ",
         "bedroom 2, ",
         "hall, ",
-        "living room, ",
+        "living room ",
     };
 static int actual_rooms = 5;
 static int max_rooms = 7;
@@ -82,15 +82,19 @@ static void res_get_handler(coap_message_t *request, coap_message_t *response, u
   if(coap_get_query_variable(request, "room", &room)) {
     index = atoi(room);
     if(index > 0 && index < actual_rooms+1) {
-      length = sizeof(rooms_avl[index-1]);
-      memcpy(buffer, rooms_avl[index-1], length);
+      	char msg[];
+	strcpy(msg,"{\"MoteValue\":{\"MoteName\":");
+	strcat(msg,rooms_avl[index-1]);
+	strcat(msg,",\"Value\":\"10\"}}");
+      	length = sizeof(msg);
+      	memcpy(buffer, msg, length-1);
     } else {
-    length = sizeof(rooms_avl);
-    memcpy(buffer, rooms_avl, length);
+    	length = sizeof(rooms_avl);
+    	memcpy(buffer, rooms_avl, length);
     }
   }else{
-	 length = sizeof(rooms_avl);
-	 memcpy(buffer, rooms_avl, length);
+	length = sizeof(rooms_avl);
+	memcpy(buffer, rooms_avl, length);
   }
   coap_set_header_content_format(response, TEXT_PLAIN); /* text/plain is the default, hence this option could be omitted. */
   coap_set_header_etag(response, (uint8_t *)&length, 1);

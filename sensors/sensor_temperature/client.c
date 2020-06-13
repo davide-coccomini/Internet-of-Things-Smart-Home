@@ -16,7 +16,8 @@
 #define UDP_SERVER_PORT	5678
 
 #define SERVER_EP "coap://[fd00::1]:5683"
-char *service_url = "/hello";
+#define SERVER_REGISTRATION "/sensorRegistration"
+
 #define TOGGLE_INTERVAL 10
 
 static struct simple_udp_connection udp_conn;
@@ -112,23 +113,26 @@ PROCESS_THREAD(coap_client, ev, data){
 	      
       	   if(rpl_add == true){
 	
-		  printf("--Toggle timer--\n");
+		  printf("--Registration--\n");
 
 		  /* prepare request, TID is set by COAP_BLOCKING_REQUEST() */
 		  coap_init_message(request, COAP_TYPE_CON, COAP_POST, 0);
-		  coap_set_header_uri_path(request, service_url);
+		  coap_set_header_uri_path(request, (const char *)&SERVER_REGISTRATION);
 
-		  const char msg[] = "Toggle!";
+		  const char msg[] = "{\"MoteInfo\":{\"MoteType\":\"Sensor\",\"MoteResource\":\"temperature\"}}";
+		  
 
-		  coap_set_payload(request, (uint8_t *)msg, sizeof(msg) - 1);
+		  printf("%s\n", msg);
+		 
+		  coap_set_payload(request, (uint8_t *)msg, sizeof(msg)-1);
 
 		  COAP_BLOCKING_REQUEST(&server_ep, request, client_chunk_handler);
 
-		  printf("\n--Done--\n");
+		  printf("--Done--\n");
 	  }
 	  
 	  else{
-	  	printf("no rpl address\n");
+	  	printf("No rpl address yet\n");
   	 }
 
 	  etimer_reset(&et);
@@ -146,8 +150,5 @@ PROCESS_THREAD(coap_server, ev, data){
   	LOG_INFO("Starting Erbium Example Server\n");  
   	//coap_activate_resource(&res_power, "power");
   	coap_activate_resource(&res_temperature, "temperature");
-
-	
-
   	PROCESS_END();
 }
