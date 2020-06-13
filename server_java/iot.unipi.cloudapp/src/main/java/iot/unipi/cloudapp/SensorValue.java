@@ -3,17 +3,14 @@ package iot.unipi.cloudapp;
 import java.sql.Timestamp;
 
 public class SensorValue {
-	//String name;
 	Double value;
 	Timestamp timestamp;
-	String type;
+        
+        public SensorValue(String value){
+            this.value = Double.parseDouble(value);
+            timestamp = new Timestamp(System.currentTimeMillis());
+        }
 	
-	/*public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}*/
 	public Double getValue() {
 		return value;
 	}
@@ -25,12 +22,6 @@ public class SensorValue {
 	}
 	public void setTimestamp(Timestamp timestamp) {
 		this.timestamp = timestamp;
-	}
-	public String getType() {
-		return type;
-	}
-	public void setType(String type) {
-		this.type = type;
 	}
 		
 }
