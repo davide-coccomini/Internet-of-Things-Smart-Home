@@ -7,10 +7,8 @@
 <fullyQualifiedTypeName name="java.sql.Timestamp"/>
 <fullyQualifiedTypeName name="java.util.Map"/>
 <fullyQualifiedTypeName name="java.util.HashMap"/>
-<fullyQualifiedTypeName name="org.eclipse.californium.core.coap.Request"/>
 <fullyQualifiedTypeName name="org.json.simple.JSONObject"/>
 <fullyQualifiedTypeName name="org.json.simple.JSONValue"/>
-<fullyQualifiedTypeName name="org.eclipse.californium.core.coap.MediaTypeRegistry"/>
 <fullyQualifiedTypeName name="org.eclipse.californium.core.CoapClient"/>
 <fullyQualifiedTypeName name="org.eclipse.californium.core.CoapResponse"/>
 <fullyQualifiedTypeName name="org.eclipse.californium.core.coap.OptionSet"/>
@@ -18,4 +16,7 @@
 <fullyQualifiedTypeName name="org.eclipse.californium.core.coap.Response"/>
 <fullyQualifiedTypeName name="org.eclipse.californium.core.coap.CoAP.ResponseCode"/>
 <fullyQualifiedTypeName name="org.eclipse.californium.core.CoapServer"/>
+<fullyQualifiedTypeName name="org.eclipse.californium.core.coap.MediaTypeRegistry"/>
+<fullyQualifiedTypeName name="org.eclipse.californium.core.coap.Request"/>
+<fullyQualifiedTypeName name="org.eclipse.californium.core.coap.CoAP.Code"/>
 </qualifiedTypeNameHistroy>

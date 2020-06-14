@@ -2,16 +2,24 @@ package iot.unipi.cloudapp;
 
 import org.json.JSONObject;
 
+import java.util.List;
+
 import org.eclipse.californium.core.CoapClient;
 import org.eclipse.californium.core.CoapHandler;
 //import org.eclipse.californium.core.CoapObserveRelation;
 import org.eclipse.californium.core.CoapResponse;
 import org.eclipse.californium.core.CoapResource;
+import org.eclipse.californium.core.coap.CoAP;
+import org.eclipse.californium.core.coap.CoAP.Code;
 import org.eclipse.californium.core.coap.CoAP.ResponseCode;
+import org.eclipse.californium.core.coap.MediaTypeRegistry;
+import org.eclipse.californium.core.coap.Request;
 import org.eclipse.californium.core.coap.Response;
 import org.eclipse.californium.core.server.resources.CoapExchange;
 
 public class RegistrationResource extends CoapResource {
+	private static String[] moteNames = {"Kitchen", "Bedroom"};
+	private static int count = 0;
 	
     public RegistrationResource(String name) {
             super(name);
@@ -21,11 +29,11 @@ public class RegistrationResource extends CoapResource {
         byte[] request = exchange.getRequestPayload();
 
         String content = new String(request);
-        System.out.println("--content--");
-        System.out.println(content);
         JSONObject contentJson = null;
         
         contentJson = new JSONObject(content.toString());
+        System.out.println("--Registration mote--");
+        System.out.println(contentJson);
         
         if (contentJson != null && contentJson.has("MoteInfo")){
             JSONObject moteInfo = (JSONObject) contentJson.get("MoteInfo");
@@ -39,25 +47,27 @@ public class RegistrationResource extends CoapResource {
             response.setPayload("Registered");
             exchange.respond(response);
             
-            coapClient(moteIP, moteResource);
+            //DA UTILIZZARE PER ASSEGNAMENTO MOTE A STANZA
+            CoapClient client = new CoapClient("coap://[" + moteIP + "]/" + moteResource);
+            CoapResponse nameResponse = client.post("name="+moteNames[count++],MediaTypeRegistry.TEXT_PLAIN);
+            
+        	coapClient(moteIP, moteResource);
     	}
         
     }
 
     public static void coapClient(String moteIP, String moteResource) {
-        CoapClient client = new CoapClient("coap://[" + moteIP + "]/" + moteResource + "?room=1");
+        CoapClient client = new CoapClient("coap://[" + moteIP + "]/" + moteResource);
         //CoapObserveRelation relation = 
 		client.observe(
             new CoapHandler() {
                 public void onLoad(CoapResponse response) {
                     String content = response.getResponseText();
-                    System.out.println("--content--");
-                    System.out.println(content);
                     JSONObject contentJson = null;
                     
                     contentJson = new JSONObject(content.toString());
                     
-                    System.out.println("--contentJson--");
+                    System.out.println("--Measures--");
                     System.out.println(contentJson);
                     if (contentJson != null && contentJson.has("MoteValue")){
                         JSONObject moteInfo = (JSONObject) contentJson.get("MoteValue");

@@ -4,6 +4,7 @@
 #include "net/netstack.h"
 #include "net/ipv6/simple-udp.h"
 #include "node-id.h"
+#include "../global_conf.h"
 
 #include "coap-engine.h"
 #include "coap-blocking-api.h"
@@ -22,8 +23,10 @@
 
 static struct simple_udp_connection udp_conn;
 static struct etimer et;
+static struct etimer e_timer;
 
 bool rpl_add = false;
+bool registered = false;
 
 extern coap_resource_t res_temperature;
 
@@ -99,8 +102,7 @@ PROCESS_THREAD(coap_client, ev, data){
   		if((ev == PROCESS_EVENT_TIMER && data == &et) || 
 	      	ev == PROCESS_EVENT_POLL) {
 	      
-  	   		if(rpl_add == true){
-	
+  	   		if(rpl_add == true){	
 			  	printf("--Registration--\n");
 
 			  	coap_init_message(request, COAP_TYPE_CON, COAP_POST, 0);
@@ -111,6 +113,8 @@ PROCESS_THREAD(coap_client, ev, data){
 
 			  	COAP_BLOCKING_REQUEST(&server_ep, request, response_handler);
 			  	printf("\n--Done--\n");
+			  	registered = true;
+			  	break;
 	  		}
 	  
 	  		else{
@@ -129,5 +133,25 @@ PROCESS_THREAD(coap_server, ev, data){
 
   	LOG_INFO("Starting Temperature Node\n");
   	coap_activate_resource(&res_temperature, "temperature");
+  	
+  	etimer_set(&e_timer, CLOCK_SECOND * 10);
+  
+  	printf("Get temperature values\n");
+	
+  	while(1) {
+  		
+		PROCESS_WAIT_EVENT();
+	
+		if(ev == PROCESS_EVENT_TIMER && data == &e_timer){
+			if(registered && name_assigned){
+				printf("Mote name: %s", mote_name[0]);
+				printf("Event triggered\n");
+			  
+				res_temperature.trigger();
+			}
+			etimer_set(&e_timer, CLOCK_SECOND * 10);
+		}
+	}
+  
   	PROCESS_END();
 }

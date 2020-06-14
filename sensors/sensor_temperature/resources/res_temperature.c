@@ -1,21 +1,19 @@
 #include "contiki.h"
 #include "coap-engine.h"
 #include <string.h>
+#include "../../global_conf.h"
 
 /* Log configuration */
 #include "sys/log.h"
 #define LOG_MODULE "App"
 #define LOG_LEVEL LOG_LEVEL_APP
 
-static char rooms_avl[6][15] = {
-        "kitchen, ",
-        "bedroom 1, ",
-        "bedroom 2, ",
-        "hall, ",
-        "living room ",
-    };
-static int actual_rooms = 5;
-static int max_rooms = 7;
+char mote_name[1][15];
+//static int actual_rooms = 5;
+//static int max_rooms = 7;
+
+//char *mote_name;
+bool name_assigned = false;
 
 static int max_temp = 50;
 static int min_temp = 0;
@@ -23,23 +21,30 @@ static int min_temp = 0;
 static void res_post_handler(coap_message_t *request, coap_message_t *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset);
 static void res_put_handler(coap_message_t *request, coap_message_t *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset);
 static void res_get_handler(coap_message_t *request, coap_message_t *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset);
+static void res_event_handler(void);
   
 /*---------------------------------------------------------------------------*/
 
-RESOURCE(res_temperature,
+EVENT_RESOURCE(res_temperature,
          "title=\"Temperature: ?room=0..\" POST/PUT name=<name>&value=<value>\";rt=\"Control\"",
 		 res_get_handler,
          res_post_handler,
          res_put_handler,
-         NULL);
+         NULL,
+         res_event_handler);
+
+static void res_event_handler(void){
+    // Notify all the observers
+    coap_notify_observers(&res_temperature);
+}
 
 static void res_post_handler(coap_message_t *request, coap_message_t *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset){
 	const char *name = NULL;
-  	if(coap_get_post_variable(request, "name", &name)&& actual_rooms <= max_rooms) {
+  	if(coap_get_post_variable(request, "name", &name)) {
 		char new_room[15];
 		sprintf(new_room, "%s, ", name);
-		strcpy(rooms_avl[actual_rooms], new_room);
-		actual_rooms +=1;
+		strcpy(mote_name[0], new_room);
+		name_assigned = true;
 		coap_set_status_code(response, CREATED_2_01);
   	}else{
 	  	coap_set_status_code(response, BAD_REQUEST_4_00);
@@ -47,7 +52,7 @@ static void res_post_handler(coap_message_t *request, coap_message_t *response, 
 }
 
 static void res_put_handler(coap_message_t *request, coap_message_t *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset){
-	size_t len = 0;
+	/*size_t len = 0;
 	const char *text = NULL;
 	char room[15];
 		memset(room, 0, 15);
@@ -77,37 +82,25 @@ static void res_put_handler(coap_message_t *request, coap_message_t *response, u
 	}
 	if (success_2 == 0){
 		coap_set_status_code(response, BAD_REQUEST_4_00);
-	}
+	}*/
 }
 
 static void res_get_handler(coap_message_t *request, coap_message_t *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset){
-  	const char *room = NULL;
   	int length;
-  	int index;
-  
-  	if(coap_get_query_variable(request, "room", &room)) {
-    	index = atoi(room);
-    	if(index > 0 && index < actual_rooms+1) {
-    		int temp = (rand() % (max_temp - min_temp + 1)) + min_temp; 
-    		char s_temp[3];
-			sprintf(s_temp, "%d", temp);
-			
-      		char msg[200];
-			strcpy(msg,"{\"MoteValue\":{\"MoteName\":\"");
-			strcat(msg,rooms_avl[index-1]);
-			strcat(msg,"\",\"Value\":\"");
-			strcat(msg,s_temp);
-			strcat(msg,"\"}}");
-      		length = sizeof(msg);
-      		memcpy(buffer, (uint8_t *)msg, length-1);
-    	} else {
-    		length = sizeof(rooms_avl);
-    		memcpy(buffer, rooms_avl, length);
-    	}
-  	}else{
-		length = sizeof(rooms_avl);
-		memcpy(buffer, rooms_avl, length);
-  	}
+
+  	int temp = (rand() % (max_temp - min_temp + 1)) + min_temp; 
+	char s_temp[3];
+	sprintf(s_temp, "%d", temp);
+	
+	char msg[200];
+	strcpy(msg,"{\"MoteValue\":{\"MoteName\":\"");
+	strcat(msg,mote_name[0]);
+	strcat(msg,"\",\"Value\":\"");
+	strcat(msg,s_temp);
+	strcat(msg,"\"}}");
+	length = sizeof(msg);
+	memcpy(buffer, (uint8_t *)msg, length-1);
+
   	coap_set_header_content_format(response, TEXT_PLAIN);
   	coap_set_header_etag(response, (uint8_t *)&length, 1);
   	coap_set_payload(response, (uint8_t *)buffer, length);
