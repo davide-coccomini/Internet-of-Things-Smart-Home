@@ -1,12 +1,10 @@
 package iot.unipi.cloudapp;
 
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import org.json.JSONObject;
 
 import org.eclipse.californium.core.CoapClient;
 import org.eclipse.californium.core.CoapHandler;
-import org.eclipse.californium.core.CoapObserveRelation;
+//import org.eclipse.californium.core.CoapObserveRelation;
 import org.eclipse.californium.core.CoapResponse;
 import org.eclipse.californium.core.CoapResource;
 import org.eclipse.californium.core.coap.CoAP.ResponseCode;
@@ -23,19 +21,15 @@ public class RegistrationResource extends CoapResource {
         byte[] request = exchange.getRequestPayload();
 
         String content = new String(request);
+        System.out.println("--content--");
         System.out.println(content);
         JSONObject contentJson = null;
-        try {
-                contentJson = (JSONObject) (new JSONParser()).parse(content);
-        } catch (ParseException e) {
-                e.printStackTrace();
-        }
-        System.out.println(contentJson);
         
-        if (contentJson.containsKey("MoteInfo")){
+        contentJson = new JSONObject(content.toString());
+        
+        if (contentJson != null && contentJson.has("MoteInfo")){
             JSONObject moteInfo = (JSONObject) contentJson.get("MoteInfo");
             String moteIP = (String) exchange.getSourceAddress().getHostAddress();
-            System.out.println(moteIP);
             String moteType = (String) moteInfo.get("MoteType");
             String moteResource = (String) moteInfo.get("MoteResource");
             
@@ -49,35 +43,31 @@ public class RegistrationResource extends CoapResource {
     	}
         
     }
-    
-    
 
     public static void coapClient(String moteIP, String moteResource) {
         CoapClient client = new CoapClient("coap://[" + moteIP + "]/" + moteResource + "?room=1");
-        CoapObserveRelation relation = client.observe(
+        //CoapObserveRelation relation = 
+		client.observe(
             new CoapHandler() {
                 public void onLoad(CoapResponse response) {
-                    String content = response.getResponseText().toString();
+                    String content = response.getResponseText();
+                    System.out.println("--content--");
                     System.out.println(content);
-                    try {
-                        JSONObject contentJson = (JSONObject) (new JSONParser()).parse(content);
-                        System.out.println(contentJson);
+                    JSONObject contentJson = null;
+                    
+                    contentJson = new JSONObject(content.toString());
+                    
+                    System.out.println("--contentJson--");
+                    System.out.println(contentJson);
+                    if (contentJson != null && contentJson.has("MoteValue")){
+                        JSONObject moteInfo = (JSONObject) contentJson.get("MoteValue");
+                        String moteName = (String) moteInfo.get("MoteName");
+                        String value = (String) moteInfo.get("Value");
                         
-                        if (contentJson.containsKey("MoteValue")){
-                            JSONObject moteInfo = (JSONObject) contentJson.get("MoteValue");
-                            String moteName = (String) moteInfo.get("MoteName");
-                            String value = (String) moteInfo.get("Value");
-                            
-                            Mote mote = Server.assignedMotes.get(moteName);
-                            if(mote != null){
-                                mote.getValues().add(new SensorValue(value));
-                            }
-                                    
-                            
-                        }
-                    } catch (ParseException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
+                        Mote mote = Server.assignedMotes.get(moteName);
+                        if(mote != null){
+                            mote.getValues().add(new SensorValue(value));
+                        }                       
                     }
                 }
 

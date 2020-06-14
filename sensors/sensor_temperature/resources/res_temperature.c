@@ -6,6 +6,7 @@
 #include "sys/log.h"
 #define LOG_MODULE "App"
 #define LOG_LEVEL LOG_LEVEL_APP
+
 static char rooms_avl[6][15] = {
         "kitchen, ",
         "bedroom 1, ",
@@ -15,11 +16,16 @@ static char rooms_avl[6][15] = {
     };
 static int actual_rooms = 5;
 static int max_rooms = 7;
+
+static int max_temp = 50;
+static int min_temp = 0;
+
 static void res_post_handler(coap_message_t *request, coap_message_t *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset);
 static void res_put_handler(coap_message_t *request, coap_message_t *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset);
 static void res_get_handler(coap_message_t *request, coap_message_t *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset);
+  
+/*---------------------------------------------------------------------------*/
 
-/* A simple actuator example, depending on the color query parameter and post variable mode, corresponding led is activated or deactivated */
 RESOURCE(res_temperature,
          "title=\"Temperature: ?room=0..\" POST/PUT name=<name>&value=<value>\";rt=\"Control\"",
 		 res_get_handler,
@@ -28,39 +34,39 @@ RESOURCE(res_temperature,
          NULL);
 
 static void res_post_handler(coap_message_t *request, coap_message_t *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset){
-  const char *name = NULL;
-  if(coap_get_post_variable(request, "name", &name)&& actual_rooms <= max_rooms) {
-    char new_room[15];
-    sprintf(new_room, "%s, ", name);
-    strcpy(rooms_avl[actual_rooms], new_room);
-    actual_rooms +=1;
-    coap_set_status_code(response, CREATED_2_01);
-  }else{
-	  coap_set_status_code(response, BAD_REQUEST_4_00);
-  }
+	const char *name = NULL;
+  	if(coap_get_post_variable(request, "name", &name)&& actual_rooms <= max_rooms) {
+		char new_room[15];
+		sprintf(new_room, "%s, ", name);
+		strcpy(rooms_avl[actual_rooms], new_room);
+		actual_rooms +=1;
+		coap_set_status_code(response, CREATED_2_01);
+  	}else{
+	  	coap_set_status_code(response, BAD_REQUEST_4_00);
+  	}
 }
 
 static void res_put_handler(coap_message_t *request, coap_message_t *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset){
 	size_t len = 0;
 	const char *text = NULL;
 	char room[15];
-    memset(room, 0, 15);
+		memset(room, 0, 15);
 	char temp[32];
-    memset(temp, 0, 32);
+		memset(temp, 0, 32);
 	int success_1 = 0;
 	int success_2 = 0;
 
 	len = coap_get_post_variable(request, "name", &text);
 	if(len > 0 && len < 15) {
-	    memcpy(room, text, len);
-	    success_1 = 1;
+		memcpy(room, text, len);
+		success_1 = 1;
 	}
 
 	len = coap_get_post_variable(request, "value", &text);
 	if(len > 0 && len < 32 && success_1 == 1) {
 		memcpy(temp, text, len);
 		char msg[50];
-	    memset(msg, 0, 50);
+		memset(msg, 0, 50);
 		sprintf(msg, "Temp in %s set to %s", room, temp);
 		int length=sizeof(msg);
 		coap_set_header_content_format(response, TEXT_PLAIN);
@@ -75,28 +81,34 @@ static void res_put_handler(coap_message_t *request, coap_message_t *response, u
 }
 
 static void res_get_handler(coap_message_t *request, coap_message_t *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset){
-  const char *room = NULL;
-  int length;
-  int index;
-  /* The query string can be retrieved by rest_get_query() or parsed for its key-value pairs. */
-  if(coap_get_query_variable(request, "room", &room)) {
-    index = atoi(room);
-    if(index > 0 && index < actual_rooms+1) {
-      	char msg[];
-	strcpy(msg,"{\"MoteValue\":{\"MoteName\":");
-	strcat(msg,rooms_avl[index-1]);
-	strcat(msg,",\"Value\":\"10\"}}");
-      	length = sizeof(msg);
-      	memcpy(buffer, msg, length-1);
-    } else {
-    	length = sizeof(rooms_avl);
-    	memcpy(buffer, rooms_avl, length);
-    }
-  }else{
-	length = sizeof(rooms_avl);
-	memcpy(buffer, rooms_avl, length);
-  }
-  coap_set_header_content_format(response, TEXT_PLAIN); /* text/plain is the default, hence this option could be omitted. */
-  coap_set_header_etag(response, (uint8_t *)&length, 1);
-  coap_set_payload(response, buffer, length);
+  	const char *room = NULL;
+  	int length;
+  	int index;
+  
+  	if(coap_get_query_variable(request, "room", &room)) {
+    	index = atoi(room);
+    	if(index > 0 && index < actual_rooms+1) {
+    		int temp = (rand() % (max_temp - min_temp + 1)) + min_temp; 
+    		char s_temp[3];
+			sprintf(s_temp, "%d", temp);
+			
+      		char msg[200];
+			strcpy(msg,"{\"MoteValue\":{\"MoteName\":\"");
+			strcat(msg,rooms_avl[index-1]);
+			strcat(msg,"\",\"Value\":\"");
+			strcat(msg,s_temp);
+			strcat(msg,"\"}}");
+      		length = sizeof(msg);
+      		memcpy(buffer, (uint8_t *)msg, length-1);
+    	} else {
+    		length = sizeof(rooms_avl);
+    		memcpy(buffer, rooms_avl, length);
+    	}
+  	}else{
+		length = sizeof(rooms_avl);
+		memcpy(buffer, rooms_avl, length);
+  	}
+  	coap_set_header_content_format(response, TEXT_PLAIN);
+  	coap_set_header_etag(response, (uint8_t *)&length, 1);
+  	coap_set_payload(response, (uint8_t *)buffer, length);
 }

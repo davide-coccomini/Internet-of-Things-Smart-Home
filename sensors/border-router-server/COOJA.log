@@ -1,9 +1,5 @@
-[20:26:13 - main] [Cooja.java:1351] [INFO] - > Starting Cooja
-[20:26:13 - main] [Cooja.java:2857] [INFO] - External tools default settings: /external_tools_linux_64.config
-[20:26:13 - main] [Cooja.java:2887] [INFO] - External tools user settings: /home/osboxes/.cooja.user.properties
-[20:26:13 - main] [Cooja.java:1357] [INFO] - > Creating simulation
-[20:26:16 - AWT-EventQueue-1] [Simulation.java:422] [INFO] - Simulation random seed: 123456
-[20:26:16 - main] [Visualizer.java:256] [INFO] - Registered external visualizer: org.contikios.cooja.plugins.skins.DGRMVisualizerSkin
-[20:26:16 - main] [Cooja.java:1367] [INFO] - > Creating mote type
-[20:26:16 - main] [AbstractCompileDialog.java:612] [WARN] - Could not find Contiki source: /home/osboxes/contiki-ng/examples/smart-home/sensors/border-router-server/router-connect-cooja.c
-[20:26:19 - main] [Cooja.java:1375] [FATAL] - Mote type initialization failed, aborting quickstart
+[10:28:14 - main] [Cooja.java:1351] [INFO] - > Starting Cooja
+[10:28:15 - main] [Cooja.java:2857] [INFO] - External tools default settings: /external_tools_linux_64.config
+[10:28:15 - main] [Cooja.java:2887] [INFO] - External tools user settings: /home/osboxes/.cooja.user.properties
+[10:28:15 - main] [Cooja.java:1357] [INFO] - > Creating simulation
+[10:28:18 - main] [Cooja.java:1362] [FATAL] - No simulation, aborting quickstart

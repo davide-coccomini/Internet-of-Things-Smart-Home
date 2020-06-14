@@ -7,3 +7,5 @@ org.eclipse.launchbar.core.descriptorType.default\:Server\ (1)/activeLaunchMode=
 org.eclipse.launchbar.core.descriptorType.default\:Server\ (1)/activeLaunchTarget=org.eclipse.launchbar.core.launchTargetType.local\:Local
 org.eclipse.launchbar.core.descriptorType.default\:Server/activeLaunchMode=run
 org.eclipse.launchbar.core.descriptorType.default\:Server/activeLaunchTarget=org.eclipse.launchbar.core.launchTargetType.local\:Local
+org.eclipse.launchbar.core.descriptorType.default\:Server2\ (1)/activeLaunchMode=run
+org.eclipse.launchbar.core.descriptorType.default\:Server2\ (1)/activeLaunchTarget=org.eclipse.launchbar.core.launchTargetType.local\:Local

@@ -17,4 +17,5 @@
 <fullyQualifiedTypeName name="org.eclipse.californium.core.server.resources.CoapExchange"/>
 <fullyQualifiedTypeName name="org.eclipse.californium.core.coap.Response"/>
 <fullyQualifiedTypeName name="org.eclipse.californium.core.coap.CoAP.ResponseCode"/>
+<fullyQualifiedTypeName name="org.eclipse.californium.core.CoapServer"/>
 </qualifiedTypeNameHistroy>

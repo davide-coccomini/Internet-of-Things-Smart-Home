@@ -22,11 +22,9 @@
 
 static struct simple_udp_connection udp_conn;
 static struct etimer et;
-//#define START_INTERVAL		(5 * CLOCK_SECOND)
 
 bool rpl_add = false;
 
-//extern coap_resource_t res_power;
 extern coap_resource_t res_temperature;
 
 /*---------------------------------------------------------------------------*/
@@ -36,119 +34,100 @@ PROCESS(coap_server, "CoAP Server");
 AUTOSTART_PROCESSES(&udp_client, &coap_client, &coap_server);
 
 /*---------------------------------------------------------------------------*/
-static void udp_rx_callback(struct simple_udp_connection *c, const uip_ipaddr_t *sender_addr,
+static void udp_callback(struct simple_udp_connection *c, const uip_ipaddr_t *sender_addr,
          uint16_t sender_port, const uip_ipaddr_t *receiver_addr, uint16_t receiver_port, const uint8_t *data, uint16_t datalen){
-  LOG_INFO("Received response %s ", data);
-  LOG_INFO_6ADDR(sender_addr);
-  LOG_INFO_("\n");
+  	printf("Received response %s \n", data);
 }
 
-void client_chunk_handler(coap_message_t *response)
-{
-  const uint8_t *chunk;
-  if(response == NULL) {
-    puts("Request timed out");
-    return;
-  }
-  int len = coap_get_payload(response, &chunk);
-  printf("|%.*s", len, (char *)chunk);
+void response_handler(coap_message_t *response){
+  	const uint8_t *chunk;
+  	if(response == NULL) {
+    	puts("Request timed out");
+    	return;
+  	}
+  	int len = coap_get_payload(response, &chunk);
+  	printf("|%.*s", len, (char *)chunk);
 }
 
 /*---------------------------------------------------------------------------*/
 PROCESS_THREAD(udp_client, ev, data){
-  static struct etimer periodic_timer;
-  uip_ipaddr_t dest_ipaddr;
-  static unsigned int message_number = 0;
+	static struct etimer periodic_timer;
+  	uip_ipaddr_t dest_ipaddr;
   
-  int START_INTERVAL = 5;
+  	int START_INTERVAL = 5;
 
-  PROCESS_BEGIN();
-  /* Initialize UDP connection */
-  simple_udp_register(&udp_conn, UDP_CLIENT_PORT, NULL, UDP_SERVER_PORT, udp_rx_callback);
-  etimer_set(&periodic_timer, START_INTERVAL);
+  	PROCESS_BEGIN();
+
+  	simple_udp_register(&udp_conn, UDP_CLIENT_PORT, NULL, UDP_SERVER_PORT, udp_callback);
+  	etimer_set(&periodic_timer, START_INTERVAL);
   
-  while(1) {
-    PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&periodic_timer));
-    if(NETSTACK_ROUTING.node_is_reachable() && NETSTACK_ROUTING.get_root_ipaddr(&dest_ipaddr)) {
-      /* Send to DAG root */
-      LOG_INFO("Sending request %u to ", message_number);
-      LOG_INFO_6ADDR(&dest_ipaddr);
-      LOG_INFO_("\n");
-      char buf[300];
-      sprintf(buf, "Message %d from node %d", message_number, node_id);
-      message_number++;
-      simple_udp_sendto(&udp_conn, buf, strlen(buf) + 1, &dest_ipaddr);
-      rpl_add = true;
+  	while(1) {
+    	PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&periodic_timer));
+    	if(NETSTACK_ROUTING.node_is_reachable() && NETSTACK_ROUTING.get_root_ipaddr(&dest_ipaddr)) {
+      		const char buf[] ="UDP connection established\n";
+      		//sprintf(buf, "Message %d from node %d", message_number, node_id);
+  			simple_udp_sendto(&udp_conn, buf, sizeof(buf)-1, &dest_ipaddr);
+  			
+      		rpl_add = true;
+      		START_INTERVAL = 50;
+		} 
+    	else {
+      		printf("Not reachable yet\n");
+    	}
+		etimer_set(&periodic_timer, START_INTERVAL * CLOCK_SECOND);
+  	}
   
-      START_INTERVAL = 50;
-    } 
-    else {
-      LOG_INFO("Not reachable yet\n");
-    }
-    etimer_set(&periodic_timer, START_INTERVAL * CLOCK_SECOND);
-  }
-  
-  PROCESS_END();
+	PROCESS_END();
 }
   
 /*---------------------------------------------------------------------------*/
 PROCESS_THREAD(coap_client, ev, data){
 
-  static coap_endpoint_t server_ep;
-  static coap_message_t request[1]; 
+  	static coap_endpoint_t server_ep;
+  	static coap_message_t request[1]; 
   
-  PROCESS_BEGIN();
-  /* COAP client */
-  coap_endpoint_parse(SERVER_EP, strlen(SERVER_EP), &server_ep);
+  	PROCESS_BEGIN();
+  	coap_endpoint_parse(SERVER_EP, strlen(SERVER_EP), &server_ep);
 
-  etimer_set(&et, TOGGLE_INTERVAL * CLOCK_SECOND);
+  	etimer_set(&et, TOGGLE_INTERVAL * CLOCK_SECOND);
 
-  while(1) {
+  	while(1) {
   
-  	printf("while coap\n");
-  	PROCESS_YIELD();
-  	printf("timer wait\n");
-  	if((ev == PROCESS_EVENT_TIMER && data == &et) || 
-	      ev == PROCESS_EVENT_POLL) {
+  		printf("Waiting connection..\n");
+  		PROCESS_YIELD();
+
+  		if((ev == PROCESS_EVENT_TIMER && data == &et) || 
+	      	ev == PROCESS_EVENT_POLL) {
 	      
-      	   if(rpl_add == true){
+  	   		if(rpl_add == true){
 	
-		  printf("--Registration--\n");
+			  	printf("--Registration--\n");
 
-		  /* prepare request, TID is set by COAP_BLOCKING_REQUEST() */
-		  coap_init_message(request, COAP_TYPE_CON, COAP_POST, 0);
-		  coap_set_header_uri_path(request, (const char *)&SERVER_REGISTRATION);
+			  	coap_init_message(request, COAP_TYPE_CON, COAP_POST, 0);
+			  	coap_set_header_uri_path(request, (const char *)&SERVER_REGISTRATION);
+			  	const char msg[] = "{\"MoteInfo\":{\"MoteType\":\"Sensor\",\"MoteResource\":\"temperature\"}}";
+			  	printf("%s\n", msg);
+				coap_set_payload(request, (uint8_t *)msg, sizeof(msg)-1);
 
-		  const char msg[] = "{\"MoteInfo\":{\"MoteType\":\"Sensor\",\"MoteResource\":\"temperature\"}}";
-		  
-
-		  printf("%s\n", msg);
-		 
-		  coap_set_payload(request, (uint8_t *)msg, sizeof(msg)-1);
-
-		  COAP_BLOCKING_REQUEST(&server_ep, request, client_chunk_handler);
-
-		  printf("--Done--\n");
-	  }
+			  	COAP_BLOCKING_REQUEST(&server_ep, request, response_handler);
+			  	printf("\n--Done--\n");
+	  		}
 	  
-	  else{
-	  	printf("No rpl address yet\n");
-  	 }
-
-	  etimer_reset(&et);
-	}
-	
-  }
+	  		else{
+	  			printf("Not rpl address yet\n");
+  	 		}	
+	  		etimer_reset(&et);
+		}
+  	}
   
-  PROCESS_END();
+  	PROCESS_END();
 }
 
 /*---------------------------------------------------------------------------*/
 PROCESS_THREAD(coap_server, ev, data){
   	PROCESS_BEGIN();
 
-  	LOG_INFO("Starting Erbium Example Server\n");  
-  	//coap_activate_resource(&res_power, "power");
+  	LOG_INFO("Starting Temperature Node\n");
   	coap_activate_resource(&res_temperature, "temperature");
   	PROCESS_END();
 }
