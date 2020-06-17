@@ -15,6 +15,7 @@ public class Server extends CoapServer {
 		System.out.print("Running it!");
         Server server = new Server();
         server.add(new RegistrationResource("sensorRegistration"));
+        server.add(new MoteIPAddressResource("moteAddress"));
         server.start();
 	}
 

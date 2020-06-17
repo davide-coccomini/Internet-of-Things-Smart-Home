@@ -17,6 +17,7 @@ bool name_assigned = false;
 
 static int max_pow = 1200;
 static int min_pow = 0;
+char s_pow[5];
 
 static void res_post_handler(coap_message_t *request, coap_message_t *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset);
 static void res_put_handler(coap_message_t *request, coap_message_t *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset);
@@ -34,6 +35,10 @@ EVENT_RESOURCE(res_power,
          res_event_handler);
 
 static void res_event_handler(void){
+  	int pow = (rand() % (max_pow - min_pow + 1)) + min_pow; 
+	sprintf(s_pow, "%d", pow);
+	
+
     // Notify all the observers
     coap_notify_observers(&res_power);
 }
@@ -88,10 +93,6 @@ static void res_put_handler(coap_message_t *request, coap_message_t *response, u
 static void res_get_handler(coap_message_t *request, coap_message_t *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset){
   	int length;
 
-  	int pow = (rand() % (max_pow - min_pow + 1)) + min_pow; 
-	char s_pow[3];
-	sprintf(s_pow, "%d", pow);
-	
 	char msg[200];
 	strcpy(msg,"{\"MoteValue\":{\"MoteName\":\"");
 	strcat(msg,mote_name[0]);

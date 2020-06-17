@@ -17,6 +17,11 @@ bool name_assigned = false;
 
 static int max_temp = 50;
 static int min_temp = 0;
+int temp;
+char s_temp[3];
+
+char actuator_ip[39];
+bool actuator_ip_assigned = false;
 
 static void res_post_handler(coap_message_t *request, coap_message_t *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset);
 static void res_put_handler(coap_message_t *request, coap_message_t *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset);
@@ -34,17 +39,34 @@ EVENT_RESOURCE(res_temperature,
          res_event_handler);
 
 static void res_event_handler(void){
-    // Notify all the observers
+	 // Notify all the observers
     coap_notify_observers(&res_temperature);
 }
 
 static void res_post_handler(coap_message_t *request, coap_message_t *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset){
 	const char *name = NULL;
   	if(coap_get_post_variable(request, "name", &name)) {
-		char new_room[15];
+		char new_room[15] = "";
 		sprintf(new_room, "%s, ", name);
 		strcpy(mote_name[0], new_room);
 		name_assigned = true;
+		coap_set_status_code(response, CREATED_2_01);
+	}
+	else if(coap_get_post_variable(request, "actuator", &name)) {
+		char bad_ip[39] = "";
+		char ip[39] = "";
+		sprintf(bad_ip, "%s, ", name);
+		for(int i = 0; i < sizeof(bad_ip)-1; i++){
+			if(bad_ip[i] != ','){
+				ip[i] = bad_ip[i];
+			}
+			else break;
+		}
+		printf("Actuator IP associated: %s\n", ip);
+		strcpy(actuator_ip, "coap://[");
+		strcat(actuator_ip,ip);
+		strcat(actuator_ip,"]:5683");
+		actuator_ip_assigned = true;
 		coap_set_status_code(response, CREATED_2_01);
   	}else{
 	  	coap_set_status_code(response, BAD_REQUEST_4_00);
@@ -87,11 +109,10 @@ static void res_put_handler(coap_message_t *request, coap_message_t *response, u
 
 static void res_get_handler(coap_message_t *request, coap_message_t *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset){
   	int length;
-
-  	int temp = (rand() % (max_temp - min_temp + 1)) + min_temp; 
-	char s_temp[3];
-	sprintf(s_temp, "%d", temp);
 	
+	temp = (rand() % (max_temp - min_temp + 1)) + min_temp;
+	sprintf(s_temp, "%d", temp);
+
 	char msg[200];
 	strcpy(msg,"{\"MoteValue\":{\"MoteName\":\"");
 	strcat(msg,mote_name[0]);

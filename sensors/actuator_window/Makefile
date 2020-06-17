@@ -1,4 +1,4 @@
-CONTIKI_PROJECT = client
+CONTIKI_PROJECT = window 
 all: $(CONTIKI_PROJECT)
 CFLAGS += -DPROJECT_CONF_H=\"project-conf.h\"
 CONTIKI = ../../../..
