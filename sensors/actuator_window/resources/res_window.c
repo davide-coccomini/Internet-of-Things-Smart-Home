@@ -38,9 +38,10 @@ static void res_event_handler(void){
 static void res_post_handler(coap_message_t *request, coap_message_t *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset){
 	const char *name = NULL;
   	if(coap_get_post_variable(request, "name", &name)) {
-		char new_room[15];
-		sprintf(new_room, "%s, ", name);
+  		char new_room[15] = "";
+		sprintf(new_room, "%s", name);
 		strcpy(mote_name[0], new_room);
+		printf("Name received: %s\n", mote_name[0]);
 		name_assigned = true;
 		coap_set_status_code(response, CREATED_2_01);
   	}else{
@@ -51,25 +52,27 @@ static void res_post_handler(coap_message_t *request, coap_message_t *response, 
 static void res_put_handler(coap_message_t *request, coap_message_t *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset){
 	size_t len = 0;
 	const char *text = NULL;
-	char command[32];
-		memset(command, 0, 32);
+	int command = 0;
 
 	len = coap_get_post_variable(request, "value", &text);
 	if(len > 0) {
-		memcpy(command, text, len);
-		if(strcmp(command, "open")){
+		command = atoi(text);
+
+		if(command == 1){
 			if(!window_open){
 				printf("Open window\n");
 				window_open = true;
 				status_changed = true;
 			}
+			else printf("Window already open\n");
 		}
-		else if(strcmp(command, "close")){
+		else if(command == 0){
 			if(window_open){
 				printf("Window closed\n");
 				window_open = false;
 				status_changed = true;	
 			}
+			else printf("Window already closed\n");
 		}
 		const char msg[] = "Command executed!";
 		int length=sizeof(msg);
@@ -87,7 +90,7 @@ static void res_get_handler(coap_message_t *request, coap_message_t *response, u
 	strcpy(msg,"{\"MoteValue\":{\"MoteName\":\"");
 	strcat(msg,mote_name[0]);
 	strcat(msg,"\",\"Value\":\"");
-	strcat(msg,window_open?"open":"close");
+	strcat(msg,window_open?"1":"0");
 	strcat(msg,"\"}}");
 	length = sizeof(msg);
 	memcpy(buffer, (uint8_t *)msg, length-1);

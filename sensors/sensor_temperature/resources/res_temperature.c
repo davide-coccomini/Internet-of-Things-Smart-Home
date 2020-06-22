@@ -47,21 +47,15 @@ static void res_post_handler(coap_message_t *request, coap_message_t *response, 
 	const char *name = NULL;
   	if(coap_get_post_variable(request, "name", &name)) {
 		char new_room[15] = "";
-		sprintf(new_room, "%s, ", name);
+		sprintf(new_room, "%s", name);
 		strcpy(mote_name[0], new_room);
+		printf("Name received: %s\n", mote_name[0]);
 		name_assigned = true;
 		coap_set_status_code(response, CREATED_2_01);
 	}
 	else if(coap_get_post_variable(request, "actuator", &name)) {
-		char bad_ip[39] = "";
 		char ip[39] = "";
-		sprintf(bad_ip, "%s, ", name);
-		for(int i = 0; i < sizeof(bad_ip)-1; i++){
-			if(bad_ip[i] != ','){
-				ip[i] = bad_ip[i];
-			}
-			else break;
-		}
+		sprintf(ip, "%s", name);
 		printf("Actuator IP associated: %s\n", ip);
 		strcpy(actuator_ip, "coap://[");
 		strcat(actuator_ip,ip);

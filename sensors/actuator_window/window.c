@@ -49,7 +49,7 @@ void response_handler(coap_message_t *response){
     	return;
   	}
   	int len = coap_get_payload(response, &chunk);
-  	printf("|%.*s", len, (char *)chunk);
+  	printf("|%.*s\n", len, (char *)chunk);
 }
 
 /*---------------------------------------------------------------------------*/
@@ -112,7 +112,7 @@ PROCESS_THREAD(coap_client, ev, data){
 				coap_set_payload(request, (uint8_t *)msg, sizeof(msg)-1);
 
 			  	COAP_BLOCKING_REQUEST(&server_ep, request, response_handler);
-			  	printf("\n--Done--\n");
+			  	//printf("\n--Done--\n");
 			  	registered = true;
 			  	break;
 	  		}
@@ -140,18 +140,19 @@ PROCESS_THREAD(coap_server, ev, data){
 	
   	while(1) {
   		
-		PROCESS_WAIT_EVENT();
-	
-		if(ev == PROCESS_EVENT_TIMER && data == &e_timer){
-			if(registered && name_assigned && status_changed){
-				printf("Mote name: %s", mote_name[0]);
-				printf("\nEvent triggered\n");
-			  
-				res_window.trigger();
-			}
-			etimer_set(&e_timer, CLOCK_SECOND * 10);
-		}
-	}
+  		PROCESS_WAIT_EVENT();
+  	
+  		if(ev == PROCESS_EVENT_TIMER && data == &e_timer){
+  			if(registered && name_assigned && status_changed){
+  				//printf("Mote name: %s\n", mote_name[0]);
+  				//printf("\nEvent triggered\n");
+  			  
+  				res_window.trigger();
+  			}
+
+  			etimer_set(&e_timer, CLOCK_SECOND * 5);
+  		}
+  	}
   
   	PROCESS_END();
 }

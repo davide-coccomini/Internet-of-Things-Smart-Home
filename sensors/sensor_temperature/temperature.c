@@ -50,7 +50,7 @@ void response_handler(coap_message_t *response){
     	return;
   	}
   	int len = coap_get_payload(response, &chunk);
-  	printf("|%.*s", len, (char *)chunk);
+  	printf("|%.*s\n", len, (char *)chunk);
 }
 
 /*---------------------------------------------------------------------------*/
@@ -113,7 +113,7 @@ PROCESS_THREAD(coap_client, ev, data){
 				coap_set_payload(request, (uint8_t *)msg, sizeof(msg)-1);
 
 			  	COAP_BLOCKING_REQUEST(&server_ep, request, response_handler);
-			  	printf("\n--Done--\n");
+			  	//printf("\n--Done--\n");
 			  	registered = true;
 			  	break;
 	  		}
@@ -138,7 +138,7 @@ PROCESS_THREAD(coap_server, ev, data){
   	LOG_INFO("Starting Temperature Node\n");
   	coap_activate_resource(&res_temperature, "temperature");
   	
-  	etimer_set(&e_timer, CLOCK_SECOND * 10);
+  	etimer_set(&e_timer, CLOCK_SECOND * 20);
   
   	printf("Get temperature values\n");
 	
@@ -148,8 +148,8 @@ PROCESS_THREAD(coap_server, ev, data){
 	
 		if(ev == PROCESS_EVENT_TIMER && data == &e_timer){
 			if(registered && name_assigned){
-				printf("Mote name: %s", mote_name[0]);
-				printf("\n------------\n");
+				//printf("Mote name: %s\n", mote_name[0]);
+				//printf("\n------------\n");
 			  
 				res_temperature.trigger();
 				if(actuator_ip_assigned){
@@ -159,20 +159,20 @@ PROCESS_THREAD(coap_server, ev, data){
 		  			coap_set_header_uri_path(request, (const char *)&ACTUATOR_WINDOW);
 		  			char msg[20];
 					if(temp > 26){
-			  			strcpy(msg,"value=open");
+			  			strcpy(msg,"value=1");
 			  			printf("Measured temperature: %d, Command: Open\n", temp);
 					}	
 					else{
-			  			strcpy(msg,"value=close");
+			  			strcpy(msg,"value=0");
 			  			printf("Measured temperature: %d, Command: Close\n", temp);
 					}
 					coap_set_payload(request, (uint8_t *)msg, sizeof(msg)-1);
 		  			COAP_BLOCKING_REQUEST(&actuator_ep, request, response_handler);
-		  			printf("\n--Done--\n");
+		  			//printf("\n--Done--\n");
 				}
 			}
 			
-			etimer_set(&e_timer, CLOCK_SECOND * 10);
+			etimer_set(&e_timer, CLOCK_SECOND * 40);
 		}
 	}
   

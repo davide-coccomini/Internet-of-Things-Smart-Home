@@ -13,7 +13,7 @@ import org.eclipse.californium.core.coap.Response;
 import org.eclipse.californium.core.server.resources.CoapExchange;
 
 public class RegistrationResource extends CoapResource {
-	private static String[] moteNames = {"Kitchen", "Bedroom", "Bath", "Garage", "Living"};
+	private static String[] moteNames = {"Kitchen", "Bedroom", "Bathroom", "Garage", "Living"};
 	private static int count = 0;
 	
     public RegistrationResource(String name) {
@@ -41,7 +41,7 @@ public class RegistrationResource extends CoapResource {
             Server.freeMotes.add(new Mote(moteIP, moteType, moteResource));
             
             Response response = new Response(ResponseCode.CONTENT);
-            response.setPayload("Registered");
+            response.setPayload("Registered!");
             exchange.respond(response);
             
             //DA UTILIZZARE PER ASSEGNAMENTO MOTE A STANZA
