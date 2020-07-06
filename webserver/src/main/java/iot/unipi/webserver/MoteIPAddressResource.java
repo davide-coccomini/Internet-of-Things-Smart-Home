@@ -17,7 +17,7 @@ public class MoteIPAddressResource extends CoapResource {
     	Response response = new Response(ResponseCode.CONTENT);
  		
  		String name = exchange.getQueryParameter("actuatorName");
- 		String actuatorIP = ServerCoap.assignedMotes.get(name).getMoteIP();
+ 		String actuatorIP = ServerCoap.motesList.get(name).getMoteIP();
  		
  		response.setPayload(actuatorIP);
  		

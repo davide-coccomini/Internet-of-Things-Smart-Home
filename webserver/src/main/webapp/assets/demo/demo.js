@@ -336,7 +336,12 @@ function populateActuators(sensors) {
 						}
 					}
 					})
-					newRow += "</select></td><td><button class='btn btn-success'>"+(actuator['status'] == 'open'?'Close':'Open')+"</button></td></tr>";
+          if(actuator["assigned"] == null){
+            newRow += "</select></td><td><button class='btn btn-success' onclick='updateActuatorStatus(\""  + actuator['name'] + "\")>"+(actuator['status'] == 'open'?'Close':'Open')+"</button></td></tr>";
+          }
+          else{
+            newRow += "</select></td><td><button class='btn btn-success' disabled>"+(actuator['status'] == 'open'?'Close':'Open')+"</button></td></tr>";
+          }
 					tableActuators.append(newRow);
 				});
             }
@@ -351,12 +356,13 @@ function updateName(input, oldName){
   console.log("Prova")
   $.ajax({
             'url' : 'sensors?action=updateMote&oldName=' + oldName + '&newName=' + newName,
-            'type' : 'GET',
+            'type' : 'PUT',
             'data' : null,
             'cache': false,
             'contentType': false,
             'processData': false,
             'success' : function(data) {
+              location.reload();
             }
     });
   console.log(oldName);
@@ -365,10 +371,34 @@ function updateName(input, oldName){
 
 function updateAssignedSensor(input, actuatorName){
   var selectedSensor = $(input).val();
-  //TODO: Request with name
+  $.ajax({
+            'url' : 'sensors?action=assignActuator&moteName=' + selectedSensor + '&actuatorName=' + actuatorName,
+            'type' : 'PUT',
+            'data' : null,
+            'cache': false,
+            'contentType': false,
+            'processData': false,
+            'success' : function(data) {
+              location.reload();
+            }
+    });
   console.log(selectedSensor);
   console.log(actuatorName);
-  populateSensors();
+  //populateSensors();
+}
+
+function updateActuatorStatus(actuatorName){
+  $.ajax({
+            'url' : 'sensors?action=actuatorStatus&actuatorName=' + actuatorName,
+            'type' : 'PUT',
+            'data' : null,
+            'cache': false,
+            'contentType': false,
+            'processData': false,
+            'success' : function(data) {
+              location.reload();
+            }
+    });
 }
 
 function selectSensor(row, name){
@@ -388,9 +418,9 @@ function selectSensor(row, name){
             'contentType': false,
             'processData': false,
             'success' : function(data) {
-				chart_labels = data["labels"];
-				chart_data = data["values"];
-  				pageChart.initDashboardPageCharts()
+      				chart_labels = data["labels"];
+      				chart_data = data["values"];
+      				pageChart.initDashboardPageCharts()
             }
     });
 }

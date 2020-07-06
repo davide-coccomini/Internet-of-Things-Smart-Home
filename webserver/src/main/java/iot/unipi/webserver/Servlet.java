@@ -11,6 +11,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.eclipse.californium.core.CoapClient;
+import org.eclipse.californium.core.coap.MediaTypeRegistry;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -40,32 +42,15 @@ public class Servlet extends HttpServlet {
      */
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        System.out.println("LIST: " + ServerCoap.assignedMotes);
+        //System.out.println("LIST: " + ServerCoap.motesList);
         
         String action = request.getParameter("action");
         StringBuffer sb = new StringBuffer();
 
-        if (action.equals("updateMote")) {
-            String oldName = request.getParameter("oldName");
-            String newName = request.getParameter("newName");
-            if(ServerCoap.assignedMotes.containsKey(oldName)){
-                Mote mote = ServerCoap.assignedMotes.remove(oldName);
-                
-                mote.setMoteName(newName);
-                
-                ServerCoap.assignedMotes.put(newName, mote);
-                
-                response.setHeader("Cache-Control", "no-cache");
-            }
-            else {
-                //nothing to show
-                response.setStatus(HttpServletResponse.SC_NO_CONTENT);
-            }
-        }
         if (action.equals("values")) {
             String name = request.getParameter("name");
-            if(ServerCoap.assignedMotes.containsKey(name)){
-                Mote mote = ServerCoap.assignedMotes.get(name);
+            if(ServerCoap.motesList.containsKey(name)){
+                Mote mote = ServerCoap.motesList.get(name);
 
                 Iterator it = mote.getValues().iterator();
 
@@ -97,13 +82,13 @@ public class Servlet extends HttpServlet {
             
             String type = request.getParameter("type");
 
-            Iterator it = ServerCoap.assignedMotes.keySet().iterator();
+            Iterator it = ServerCoap.motesList.keySet().iterator();
 
             JSONObject msg = new JSONObject();
             JSONArray array = new JSONArray();
             while (it.hasNext()) {
                 String id = (String) it.next();
-                Mote mote = (Mote) ServerCoap.assignedMotes.get(id);
+                Mote mote = (Mote) ServerCoap.motesList.get(id);
                 
                 if (mote.getMoteType().toLowerCase().equals(type.toLowerCase())) {
                     JSONObject obj = new JSONObject();
@@ -123,7 +108,84 @@ public class Servlet extends HttpServlet {
             response.getWriter().write(sb.toString());
         }
     }
+    
+    @Override
+    public void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String action = request.getParameter("action");
+        StringBuffer sb = new StringBuffer();
+        
+        if (action.equals("updateMote")) {
+            String oldName = request.getParameter("oldName");
+            String newName = request.getParameter("newName");
+            if(ServerCoap.motesList.containsKey(oldName)){
+                Mote mote = ServerCoap.motesList.remove(oldName);
+                String moteIP = mote.getMoteIP();
+                String moteResource = mote.getMoteResource();
+                
+                CoapClient client = new CoapClient("coap://[" + moteIP + "]/" + moteResource);
+                client.post("name="+newName,MediaTypeRegistry.TEXT_PLAIN);
 
+                mote.setMoteName(newName);
+                
+                if(mote.getAssociatedMoteName() != null){
+                    Mote associatedMote = ServerCoap.motesList.get(mote.getAssociatedMoteName());
+                    associatedMote.setAssociatedMoteName(newName);
+                }
+                
+                ServerCoap.motesList.put(newName, mote);
+                
+                response.setHeader("Cache-Control", "no-cache");
+            }
+            else {
+                //nothing to show
+                response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+            }
+        }
+        if (action.equals("assignActuator")) {
+            String moteName = request.getParameter("moteName");
+            String actuatorName = request.getParameter("actuatorName");
+            
+            if(ServerCoap.motesList.get(moteName) != null && ServerCoap.motesList.get(actuatorName) != null) {
+                String moteIP = ServerCoap.motesList.get(moteName).getMoteIP();
+                String actuatorIP = ServerCoap.motesList.get(actuatorName).getMoteIP();
+                System.out.println("--Actuator IP--");
+                System.out.println(actuatorIP);
+                CoapClient act = new CoapClient("coap://[" + moteIP + "]/temperature");
+                act.post("actuator="+actuatorIP,MediaTypeRegistry.TEXT_PLAIN);
+                
+                ServerCoap.motesList.get(moteName).setAssociatedMoteName(actuatorName);
+                ServerCoap.motesList.get(actuatorName).setAssociatedMoteName(moteName);
+                
+                response.setHeader("Cache-Control", "no-cache");
+            }
+            else {
+                //nothing to show
+                response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+            }
+        }
+        if (action.equals("actuatorStatus")) {
+            String actuatorName = request.getParameter("actuatorName");
+            
+            if(ServerCoap.motesList.get(actuatorName) != null) {
+                String moteIP = ServerCoap.motesList.get(moteName).getMoteIP();
+                String actuatorIP = ServerCoap.motesList.get(actuatorName).getMoteIP();
+                System.out.println("--Actuator IP--");
+                System.out.println(actuatorIP);
+                CoapClient act = new CoapClient("coap://[" + moteIP + "]/temperature");
+                act.post("actuator="+actuatorIP,MediaTypeRegistry.TEXT_PLAIN);
+                
+                ServerCoap.motesList.get(moteName).setAssociatedMoteName(actuatorName);
+                ServerCoap.motesList.get(actuatorName).setAssociatedMoteName(moteName);
+                
+                response.setHeader("Cache-Control", "no-cache");
+            }
+            else {
+                //nothing to show
+                response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+            }
+        }
+        
+    }
 
     /**
      * Returns a short description of the servlet.

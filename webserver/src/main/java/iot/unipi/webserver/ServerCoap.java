@@ -9,8 +9,7 @@ import org.eclipse.californium.core.CoapServer;
 public class ServerCoap extends CoapServer{
     private static ServerCoap serverInstance = null;
     
-    public static Map<String, Mote> assignedMotes = new HashMap<String, Mote>();
-    public static List<Mote> freeMotes = new ArrayList<Mote>();
+    public static Map<String, Mote> motesList = new HashMap<String, Mote>();
     
     public static ServerCoap getCoapInstance(){
         if(serverInstance == null){

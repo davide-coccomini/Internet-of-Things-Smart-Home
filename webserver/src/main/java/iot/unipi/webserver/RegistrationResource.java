@@ -13,7 +13,7 @@ import org.eclipse.californium.core.coap.Response;
 import org.eclipse.californium.core.server.resources.CoapExchange;
 
 public class RegistrationResource extends CoapResource {
-	private static String[] moteNames = {"Kitchen", "Bedroom", "Bath", "Garage", "Living"};
+	//private static String[] moteNames = {"Kitchen", "Bedroom", "Bath", "Garage", "Living"};
 	private static int count = 0;
 	
     public RegistrationResource(String name) {
@@ -39,32 +39,19 @@ public class RegistrationResource extends CoapResource {
             String moteResource = (String) moteInfo.get("MoteResource");
             
             
-            Mote newMote = new Mote("", moteType, moteResource);
-            newMote.setMoteIP(moteIP);
-            ServerCoap.freeMotes.add(newMote);
-            
             Response response = new Response(ResponseCode.CONTENT);
             response.setPayload("Registered");
             exchange.respond(response);
             
-            //DA UTILIZZARE PER ASSEGNAMENTO MOTE A STANZA
+            String moteName = "Mote" + count++;
             CoapClient client = new CoapClient("coap://[" + moteIP + "]/" + moteResource);
-            client.post("name="+moteNames[count],MediaTypeRegistry.TEXT_PLAIN);
-            newMote = new Mote(moteNames[count], moteType, moteResource);
+            client.post("name="+moteName,MediaTypeRegistry.TEXT_PLAIN);
+            Mote newMote = new Mote(moteName, moteType, moteResource);
             newMote.setMoteIP(moteIP);
-            ServerCoap.assignedMotes.put(moteNames[count], newMote);
-            count++;
+            ServerCoap.motesList.put(moteName, newMote);
             
-            if(moteResource.equals("temperature")) {
-            	if(ServerCoap.assignedMotes.get("Kitchen") != null) {
-            		String actuatorIP = ServerCoap.assignedMotes.get("Kitchen").getMoteIP();
-            		System.out.println("--Actuator IP--");
-                    System.out.println(actuatorIP);
-            		CoapClient act = new CoapClient("coap://[" + moteIP + "]/temperature");
-            		act.post("actuator="+actuatorIP,MediaTypeRegistry.TEXT_PLAIN);
-            	}
-            }
-        	coapClient(moteIP, moteResource);
+            coapClient(moteIP, moteResource);
+            
     	}
         
     }
@@ -76,6 +63,7 @@ public class RegistrationResource extends CoapResource {
             new CoapHandler() {
                 public void onLoad(CoapResponse response) {
                     String content = response.getResponseText();
+                    System.out.println(content);
                     JSONObject contentJson = null;
                     
                     contentJson = new JSONObject(content.toString());
@@ -87,7 +75,7 @@ public class RegistrationResource extends CoapResource {
                         String moteName = (String) moteInfo.get("MoteName");
                         String value = (String) moteInfo.get("Value");
                         
-                        Mote mote = ServerCoap.assignedMotes.get(moteName.split(",")[0]);
+                        Mote mote = ServerCoap.motesList.get(moteName.split(",")[0]);
                         System.out.println("MOTE: " + mote);
                         if(mote != null){
                             mote.getValues().add(new SensorValue(value));

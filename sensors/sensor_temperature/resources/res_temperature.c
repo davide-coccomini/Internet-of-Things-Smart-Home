@@ -2,6 +2,7 @@
 #include "coap-engine.h"
 #include <string.h>
 #include "../../global_conf.h"
+#include <time.h>
 
 /* Log configuration */
 #include "sys/log.h"
@@ -19,6 +20,7 @@ static int max_temp = 50;
 static int min_temp = 0;
 int temp;
 char s_temp[3];
+char s_timestamp[100];
 
 char actuator_ip[39];
 bool actuator_ip_assigned = false;
@@ -106,13 +108,22 @@ static void res_get_handler(coap_message_t *request, coap_message_t *response, u
 	
 	temp = (rand() % (max_temp - min_temp + 1)) + min_temp;
 	sprintf(s_temp, "%d", temp);
+	//time_t timestamp = time(0);
+	//sprintf(s_timestamp, "%d", (int)timestamp);
 
-	char msg[200];
+	//printf("Timestamp: %u\n", (unsigned)timestamp);
+
+	char msg[300];
 	strcpy(msg,"{\"MoteValue\":{\"MoteName\":\"");
 	strcat(msg,mote_name[0]);
 	strcat(msg,"\",\"Value\":\"");
 	strcat(msg,s_temp);
-	strcat(msg,"\"}}");
+	//strcat(msg,"\",\"Timestamp\":\"");
+	//strcat(msg,s_timestamp);
+	strcat(msg,"\"}}\0");
+
+	//printf("Msg: %s\n", msg);
+
 	length = sizeof(msg);
 	memcpy(buffer, (uint8_t *)msg, length-1);
 

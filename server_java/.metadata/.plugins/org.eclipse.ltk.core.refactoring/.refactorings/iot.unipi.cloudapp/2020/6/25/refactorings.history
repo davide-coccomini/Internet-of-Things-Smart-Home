@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Copy element &apos;RegistrationResource.java&apos; to &apos;iot.unipi.cloudapp.RegistrationResource.java&apos;&#x0A;- Original project: &apos;iot.unipi.cloudapp&apos;&#x0A;- Destination element: &apos;iot.unipi.cloudapp.RegistrationResource.java&apos;&#x0A;- Original element: &apos;iot.unipi.cloudapp.RegistrationResource.java&apos;" description="Copy compilation unit" destination="/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;iot.unipi.cloudapp{RegistrationResource.java" element1="/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;iot.unipi.cloudapp{RegistrationResource.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1592410517592" units="1" version="1.0"/>
-</session>

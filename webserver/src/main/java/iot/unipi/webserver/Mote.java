@@ -8,9 +8,10 @@ public class Mote {
     private String moteIP;
     private String moteType;
     private String moteResource;
-    //private String moteRoom;
     private String moteName;
     private String associatedMoteName;
+    private String status;
+
     
     private List<SensorValue> values = new ArrayList<SensorValue>();
 /*
@@ -73,6 +74,15 @@ public class Mote {
 
     public void setValues(List<SensorValue> values) {
             this.values = values;
+    }
+    
+    
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
     
 }
