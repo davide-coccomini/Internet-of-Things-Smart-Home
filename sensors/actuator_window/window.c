@@ -148,6 +148,7 @@ PROCESS_THREAD(coap_server, ev, data){
   				//printf("\nEvent triggered\n");
   			  
   				res_window.trigger();
+          status_changed = false;
   			}
 
   			etimer_set(&e_timer, CLOCK_SECOND * 5);

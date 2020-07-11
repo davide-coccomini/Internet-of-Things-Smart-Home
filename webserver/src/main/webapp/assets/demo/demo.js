@@ -321,12 +321,16 @@ function populateActuators(sensors) {
             'success' : function(data) {    
         		var tableActuators = $("#body-table-actuators");
 				tableActuators.empty()
+        console.log(data);
 				var actuators = data["array"];
 				actuators.forEach(function (actuator) {
 					var newRow = "<tr><td><input type='text' class='form-control text-center' value='" + actuator['name'] + "' onchange='updateName(this, \"" + actuator['name'] + "\")'></td><td>" + actuator['resource'] + "</td><td><select class='form-control' onchange='updateAssignedSensor(this,\""+actuator['name']+"\")'>";
 					if(actuator["assigned"] == null){
-						newRow += "<option value='' selected></option>";
+						newRow += "<option value='None' selected>None</option>";
 					}
+          else{
+            newRow += "<option value='None'>None</option>";
+          }
 					sensors.forEach(function(sensor){
 					if(sensor["resource"] == "temperature"){
 						if (actuator["assigned"] == sensor["name"]) {
@@ -336,12 +340,14 @@ function populateActuators(sensors) {
 						}
 					}
 					})
+          newRow += "</select></td>"
           if(actuator["assigned"] == null){
-            newRow += "</select></td><td><button class='btn btn-success' onclick='updateActuatorStatus(\""  + actuator['name'] + "\")>"+(actuator['status'] == 'open'?'Close':'Open')+"</button></td></tr>";
+            newRow += "<td><button class='btn btn-success' onclick='updateActuatorValue(\""  + actuator['name'] + "\")'>"+(actuator['value'] == 1?'Close':'Open')+"</button></td></tr>";
           }
           else{
-            newRow += "</select></td><td><button class='btn btn-success' disabled>"+(actuator['status'] == 'open'?'Close':'Open')+"</button></td></tr>";
+            newRow += "<td><button class='btn btn-success' disabled>"+(actuator['value'] == 0?'Closed':'Opened')+"</button></td></tr>";
           }
+          console.log(newRow);
 					tableActuators.append(newRow);
 				});
             }
@@ -387,9 +393,9 @@ function updateAssignedSensor(input, actuatorName){
   //populateSensors();
 }
 
-function updateActuatorStatus(actuatorName){
+function updateActuatorValue(actuatorName){
   $.ajax({
-            'url' : 'sensors?action=actuatorStatus&actuatorName=' + actuatorName,
+            'url' : 'sensors?action=actuatorValue&actuatorName=' + actuatorName,
             'type' : 'PUT',
             'data' : null,
             'cache': false,

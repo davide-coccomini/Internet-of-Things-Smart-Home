@@ -7,15 +7,7 @@ public class SensorValue {
 	Timestamp timestamp;
         
         public SensorValue(String value){
-            if(value.equals("open")){
-                this.value = 1.0;
-            }
-            else if(value.equals("close")){
-                this.value = 0.0;
-            }
-            else{
-                this.value = Double.parseDouble(value);
-            }
+            this.value = Double.parseDouble(value);
             timestamp = new Timestamp(System.currentTimeMillis());
         }
 	

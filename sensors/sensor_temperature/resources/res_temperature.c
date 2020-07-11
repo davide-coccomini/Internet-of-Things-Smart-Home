@@ -25,8 +25,8 @@ char s_timestamp[100];
 char actuator_ip[39];
 bool actuator_ip_assigned = false;
 
-static void res_post_handler(coap_message_t *request, coap_message_t *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset);
-static void res_put_handler(coap_message_t *request, coap_message_t *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset);
+static void res_post_put_handler(coap_message_t *request, coap_message_t *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset);
+//static void res_put_handler(coap_message_t *request, coap_message_t *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset);
 static void res_get_handler(coap_message_t *request, coap_message_t *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset);
 static void res_event_handler(void);
   
@@ -35,8 +35,8 @@ static void res_event_handler(void);
 EVENT_RESOURCE(res_temperature,
          "title=\"Temperature: ?room=0..\" POST/PUT name=<name>&value=<value>\";rt=\"Control\"",
 		 res_get_handler,
-         res_post_handler,
-         res_put_handler,
+         res_post_put_handler,
+         res_post_put_handler,
          NULL,
          res_event_handler);
 
@@ -45,7 +45,7 @@ static void res_event_handler(void){
     coap_notify_observers(&res_temperature);
 }
 
-static void res_post_handler(coap_message_t *request, coap_message_t *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset){
+static void res_post_put_handler(coap_message_t *request, coap_message_t *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset){
 	const char *name = NULL;
   	if(coap_get_post_variable(request, "name", &name)) {
 		char new_room[15] = "";
@@ -59,18 +59,28 @@ static void res_post_handler(coap_message_t *request, coap_message_t *response, 
 		char ip[39] = "";
 		sprintf(ip, "%s", name);
 		printf("Actuator IP associated: %s\n", ip);
-		strcpy(actuator_ip, "coap://[");
-		strcat(actuator_ip,ip);
-		strcat(actuator_ip,"]:5683");
-		actuator_ip_assigned = true;
-		coap_set_status_code(response, CREATED_2_01);
+		int x;
+		if((x = strcmp(ip, "None"))==0){
+			strcpy(actuator_ip, "");
+			printf("None\n");
+			actuator_ip_assigned = false;
+			coap_set_status_code(response, CREATED_2_01);
+		}
+		else{
+			printf("Else\n");
+			strcpy(actuator_ip, "coap://[");
+			strcat(actuator_ip,ip);
+			strcat(actuator_ip,"]:5683");
+			actuator_ip_assigned = true;
+			coap_set_status_code(response, CREATED_2_01);
+		}
   	}else{
 	  	coap_set_status_code(response, BAD_REQUEST_4_00);
   	}
 }
 
-static void res_put_handler(coap_message_t *request, coap_message_t *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset){
-	/*size_t len = 0;
+/*static void res_put_handler(coap_message_t *request, coap_message_t *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset){
+	size_t len = 0;
 	const char *text = NULL;
 	char room[15];
 		memset(room, 0, 15);
@@ -100,8 +110,8 @@ static void res_put_handler(coap_message_t *request, coap_message_t *response, u
 	}
 	if (success_2 == 0){
 		coap_set_status_code(response, BAD_REQUEST_4_00);
-	}*/
-}
+	}
+}*/
 
 static void res_get_handler(coap_message_t *request, coap_message_t *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset){
   	int length;

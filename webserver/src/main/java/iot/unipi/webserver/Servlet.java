@@ -24,12 +24,6 @@ public class Servlet extends HttpServlet {
     public void init(ServletConfig config) throws ServletException {
         this.context = config.getServletContext();
         ServerCoap.getCoapInstance();
-        /*
-        assignedMotes.put("mote1", new Mote("mote1", "sensor", "temperature"));
-        assignedMotes.put("mote2", new Mote("mote2", "sensor", "power"));
-        assignedMotes.put("mote3", new Mote("mote3", "actuator", "window"));
-        assignedMotes.put("mote4", new Mote("mote4", "sensor", "temperature"));
-        */
     }
 
     /**
@@ -42,8 +36,6 @@ public class Servlet extends HttpServlet {
      */
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        //System.out.println("LIST: " + ServerCoap.motesList);
-        
         String action = request.getParameter("action");
         StringBuffer sb = new StringBuffer();
 
@@ -95,6 +87,9 @@ public class Servlet extends HttpServlet {
                     obj.put("name", mote.getMoteName());
                     obj.put("resource", mote.getMoteResource());
                     obj.put("assigned", mote.getAssociatedMoteName());
+                    if(mote.getMoteType().equals("Actuator")){
+                        obj.put("value", mote.getValues().get(0).getValue());
+                    }
                     array.put(obj);
                 }
                 
@@ -123,7 +118,7 @@ public class Servlet extends HttpServlet {
                 String moteResource = mote.getMoteResource();
                 
                 CoapClient client = new CoapClient("coap://[" + moteIP + "]/" + moteResource);
-                client.post("name="+newName,MediaTypeRegistry.TEXT_PLAIN);
+                client.put("name="+newName,MediaTypeRegistry.TEXT_PLAIN);
 
                 mote.setMoteName(newName);
                 
@@ -145,17 +140,28 @@ public class Servlet extends HttpServlet {
             String moteName = request.getParameter("moteName");
             String actuatorName = request.getParameter("actuatorName");
             
-            if(ServerCoap.motesList.get(moteName) != null && ServerCoap.motesList.get(actuatorName) != null) {
+            if(moteName.equals("None") && ServerCoap.motesList.get(actuatorName) != null){
+                Mote actuator = ServerCoap.motesList.get(actuatorName);
+                String associatedMoteName = actuator.getAssociatedMoteName();
+                if(associatedMoteName != null && ServerCoap.motesList.get(associatedMoteName) != null){
+                    Mote mote = ServerCoap.motesList.get(associatedMoteName);
+                    mote.setAssociatedMoteName(null);
+                    actuator.setAssociatedMoteName(null);
+                    CoapClient act = new CoapClient("coap://[" + mote.getMoteIP() + "]/temperature");
+                    act.post("actuator=None",MediaTypeRegistry.TEXT_PLAIN);
+                    
+                    response.setHeader("Cache-Control", "no-cache");
+                }
+            }
+            else if(ServerCoap.motesList.get(moteName) != null && ServerCoap.motesList.get(actuatorName) != null) {
                 String moteIP = ServerCoap.motesList.get(moteName).getMoteIP();
                 String actuatorIP = ServerCoap.motesList.get(actuatorName).getMoteIP();
-                System.out.println("--Actuator IP--");
-                System.out.println(actuatorIP);
                 CoapClient act = new CoapClient("coap://[" + moteIP + "]/temperature");
                 act.post("actuator="+actuatorIP,MediaTypeRegistry.TEXT_PLAIN);
-                
+
                 ServerCoap.motesList.get(moteName).setAssociatedMoteName(actuatorName);
                 ServerCoap.motesList.get(actuatorName).setAssociatedMoteName(moteName);
-                
+
                 response.setHeader("Cache-Control", "no-cache");
             }
             else {
@@ -163,19 +169,14 @@ public class Servlet extends HttpServlet {
                 response.setStatus(HttpServletResponse.SC_NO_CONTENT);
             }
         }
-        if (action.equals("actuatorStatus")) {
+        if (action.equals("actuatorValue")) {
             String actuatorName = request.getParameter("actuatorName");
             
             if(ServerCoap.motesList.get(actuatorName) != null) {
-                String moteIP = ServerCoap.motesList.get(moteName).getMoteIP();
-                String actuatorIP = ServerCoap.motesList.get(actuatorName).getMoteIP();
-                System.out.println("--Actuator IP--");
-                System.out.println(actuatorIP);
-                CoapClient act = new CoapClient("coap://[" + moteIP + "]/temperature");
-                act.post("actuator="+actuatorIP,MediaTypeRegistry.TEXT_PLAIN);
-                
-                ServerCoap.motesList.get(moteName).setAssociatedMoteName(actuatorName);
-                ServerCoap.motesList.get(actuatorName).setAssociatedMoteName(moteName);
+                Mote actuator = ServerCoap.motesList.get(actuatorName);
+                String actuatorIP = actuator.getMoteIP();
+                CoapClient act = new CoapClient("coap://[" + actuatorIP + "]/window");
+                act.put("value="+(actuator.getValues().get(0).getValue()==0?1:0),MediaTypeRegistry.TEXT_PLAIN);
                 
                 response.setHeader("Cache-Control", "no-cache");
             }

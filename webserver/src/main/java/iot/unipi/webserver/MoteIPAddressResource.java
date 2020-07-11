@@ -16,11 +16,11 @@ public class MoteIPAddressResource extends CoapResource {
     public void handleGET(CoapExchange exchange) {
     	Response response = new Response(ResponseCode.CONTENT);
  		
- 		String name = exchange.getQueryParameter("actuatorName");
- 		String actuatorIP = ServerCoap.motesList.get(name).getMoteIP();
- 		
- 		response.setPayload(actuatorIP);
- 		
-		exchange.respond(response);
+        String name = exchange.getQueryParameter("actuatorName");
+        String actuatorIP = ServerCoap.motesList.get(name).getMoteIP();
+
+        response.setPayload(actuatorIP);
+
+        exchange.respond(response);
     }
 }

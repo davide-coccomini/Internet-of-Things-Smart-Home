@@ -68,7 +68,7 @@ static void res_put_handler(coap_message_t *request, coap_message_t *response, u
 		}
 		else if(command == 0){
 			if(window_open){
-				printf("Window closed\n");
+				printf("Close window\n");
 				window_open = false;
 				status_changed = true;	
 			}

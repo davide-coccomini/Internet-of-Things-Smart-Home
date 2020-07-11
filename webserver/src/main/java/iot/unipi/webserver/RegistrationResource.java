@@ -33,8 +33,6 @@ public class RegistrationResource extends CoapResource {
         if (contentJson != null && contentJson.has("MoteInfo")){
             JSONObject moteInfo = (JSONObject) contentJson.get("MoteInfo");
             String moteIP = (String) exchange.getSourceAddress().getHostAddress();
-            System.out.println("--Mote IP--");
-            System.out.println(moteIP);
             String moteType = (String) moteInfo.get("MoteType");
             String moteResource = (String) moteInfo.get("MoteResource");
             
@@ -63,7 +61,6 @@ public class RegistrationResource extends CoapResource {
             new CoapHandler() {
                 public void onLoad(CoapResponse response) {
                     String content = response.getResponseText();
-                    System.out.println(content);
                     JSONObject contentJson = null;
                     
                     contentJson = new JSONObject(content.toString());
@@ -76,9 +73,14 @@ public class RegistrationResource extends CoapResource {
                         String value = (String) moteInfo.get("Value");
                         
                         Mote mote = ServerCoap.motesList.get(moteName.split(",")[0]);
-                        System.out.println("MOTE: " + mote);
                         if(mote != null){
-                            mote.getValues().add(new SensorValue(value));
+                            if(mote.getMoteType().equals("Sensor")){
+                               mote.getValues().add(new SensorValue(value));
+                            }
+                            if(mote.getMoteType().equals("Actuator")){
+                                mote.getValues().clear();
+                                mote.getValues().add(new SensorValue(value));
+                            }
                         }                       
                     }
                 }
