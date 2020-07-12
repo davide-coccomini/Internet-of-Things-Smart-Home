@@ -1,12 +1,10 @@
 #include "contiki.h"
 #include "coap-engine.h"
 #include <string.h>
+#include "dev/leds.h"
 #include "../../global_conf.h"
-
-/* Log configuration */
 #include "sys/log.h"
-#define LOG_MODULE "App"
-#define LOG_LEVEL LOG_LEVEL_APP
+
 
 char mote_name[1][15];
 bool name_assigned = false;
@@ -50,36 +48,50 @@ static void res_post_handler(coap_message_t *request, coap_message_t *response, 
 }
 
 static void res_put_handler(coap_message_t *request, coap_message_t *response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset){
-	size_t len = 0;
-	const char *text = NULL;
-	int command = 0;
+	const char *name = NULL;
+  	if(coap_get_post_variable(request, "name", &name)) {
+		char new_room[15] = "";
+		sprintf(new_room, "%s", name);
+		strcpy(mote_name[0], new_room);
+		printf("Name received: %s\n", mote_name[0]);
+		name_assigned = true;
+		coap_set_status_code(response, CREATED_2_01);
+		#if PLATFORM_HAS_LEDS || LEDS_COUNT
+			leds_on(LEDS_NUM_TO_MASK(LEDS_GREEN));
+		#endif
+	}
+	else if(coap_get_post_variable(request, "value", &name)) {
+		size_t len = 0;
+		const char *text = NULL;
+		int command = 0;
 
-	len = coap_get_post_variable(request, "value", &text);
-	if(len > 0) {
-		command = atoi(text);
+		len = coap_get_post_variable(request, "value", &text);
+		if(len > 0) {
+			command = atoi(text);
 
-		if(command == 1){
-			if(!window_open){
-				printf("Open window\n");
-				window_open = true;
-				status_changed = true;
+			if(command == 1){
+				if(!window_open){
+					printf("Open window\n");
+					window_open = true;
+					status_changed = true;
+				}
+				else printf("Window already open\n");
 			}
-			else printf("Window already open\n");
-		}
-		else if(command == 0){
-			if(window_open){
-				printf("Close window\n");
-				window_open = false;
-				status_changed = true;	
+			else if(command == 0){
+				if(window_open){
+					printf("Close window\n");
+					window_open = false;
+					status_changed = true;	
+				}
+				else printf("Window already closed\n");
 			}
-			else printf("Window already closed\n");
+			const char msg[] = "Command executed!";
+			int length=sizeof(msg);
+			coap_set_header_content_format(response, TEXT_PLAIN);
+			coap_set_header_etag(response, (uint8_t *)&length, 1);
+			coap_set_payload(response, (uint8_t *)msg, length);
+			coap_set_status_code(response, CHANGED_2_04);
 		}
-		const char msg[] = "Command executed!";
-		int length=sizeof(msg);
-		coap_set_header_content_format(response, TEXT_PLAIN);
-		coap_set_header_etag(response, (uint8_t *)&length, 1);
-		coap_set_payload(response, (uint8_t *)msg, length);
-		coap_set_status_code(response, CHANGED_2_04);
 	}
 }
 

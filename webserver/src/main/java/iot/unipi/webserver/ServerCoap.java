@@ -14,10 +14,10 @@ public class ServerCoap extends CoapServer{
     public static ServerCoap getCoapInstance(){
         if(serverInstance == null){
             System.out.println("######################Coap init######################");
-            ServerCoap server = new ServerCoap();
-            server.add(new RegistrationResource("sensorRegistration"));
-            server.add(new MoteIPAddressResource("moteAddress"));
-            server.start();
+            serverInstance = new ServerCoap();
+            serverInstance.add(new RegistrationResource("sensorRegistration"));
+            serverInstance.add(new MoteIPAddressResource("moteAddress"));
+            serverInstance.start();
         }
         
         return serverInstance;

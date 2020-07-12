@@ -5,7 +5,9 @@ var chart_data = [];
 
 pageChart = {
   initDashboardPageCharts: function() {
-
+    $("#chart-container").empty();
+    $("#chart-container").append('<canvas id="chartBig1"></canvas>');
+    
     gradientChartOptionsConfigurationWithTooltipBlue = {
       maintainAspectRatio: false,
       legend: {
@@ -295,15 +297,15 @@ function populateSensors(){
             'contentType': false,
             'processData': false,
             'success' : function(data) {    
-        		var tableSensors = $("#body-table-sensors");
-				tableSensors.empty();
-				console.log(data);
-				var sensors = data["array"];
-				sensors.forEach(function(sensor){
-				tableSensors.append($("<tr onclick='selectSensor(this, \"" + sensor['name'] + "\")' ><td><input type='text' class='form-control text-center' value='" + sensor['name'] + "' onchange='updateName(this, \"" + sensor['name'] + "\")'></td><td>"+sensor['resource']+"</td><td>"+((sensor['assigned'] != null)?sensor['assigned']:'')+"</td></tr>"));
-				});
+          		var tableSensors = $("#body-table-sensors");
+      				tableSensors.empty();
+      				console.log(data);
+      				var sensors = data["array"];
+      				sensors.forEach(function(sensor){
+      				tableSensors.append($("<tr onclick='selectSensor(this, \"" + sensor['name'] + "\")' ><td><input type='text' class='form-control text-center' value='" + sensor['name'] + "' onchange='updateName(this, \"" + sensor['name'] + "\")'></td><td>"+sensor['resource']+"</td><td>"+((sensor['assigned'] != null)?sensor['assigned']:'')+"</td></tr>"));
+      				});
 
-				populateActuators(sensors);
+      				populateActuators(sensors);
             }
     });
 	

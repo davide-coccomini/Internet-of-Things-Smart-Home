@@ -135,7 +135,7 @@ PROCESS_THREAD(coap_server, ev, data){
 	
   	PROCESS_BEGIN();
 
-  	LOG_INFO("Starting Temperature Node\n");
+  	printf("Starting Temperature Node\n");
   	coap_activate_resource(&res_temperature, "temperature");
   	
   	etimer_set(&e_timer, CLOCK_SECOND * 20);
@@ -172,7 +172,7 @@ PROCESS_THREAD(coap_server, ev, data){
 				}
 			}
 			
-			etimer_set(&e_timer, CLOCK_SECOND * 40);
+			etimer_set(&e_timer, CLOCK_SECOND * 20);
 		}
 	}
   

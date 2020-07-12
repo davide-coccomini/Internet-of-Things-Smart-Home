@@ -30,6 +30,8 @@ build/cooja/obj/res_temperature.o: resources/res_temperature.c \
  ../../../../os/net/app-layer/coap/coap-observe.h \
  ../../../../os/net/app-layer/coap/coap-separate.h \
  ../../../../os/net/app-layer/coap/coap-observe-client.h \
+ ../../../../os/dev/leds.h ../../../../os/dev/gpio-hal.h \
+ ../../../../arch/platform/cooja/./dev/gpio-hal-arch.h \
  resources/../../global_conf.h ../../../../os/sys/log.h \
  ../../../../os/sys/log-conf.h
 resources/res_temperature.c :
@@ -64,5 +66,7 @@ resources/res_temperature.c :
  ../../../../os/net/app-layer/coap/coap-observe.h :
  ../../../../os/net/app-layer/coap/coap-separate.h :
  ../../../../os/net/app-layer/coap/coap-observe-client.h :
+ ../../../../os/dev/leds.h ../../../../os/dev/gpio-hal.h :
+ ../../../../arch/platform/cooja/./dev/gpio-hal-arch.h :
  resources/../../global_conf.h ../../../../os/sys/log.h :
  ../../../../os/sys/log-conf.h :

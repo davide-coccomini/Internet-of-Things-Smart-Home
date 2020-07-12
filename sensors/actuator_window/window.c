@@ -131,7 +131,7 @@ PROCESS_THREAD(coap_client, ev, data){
 PROCESS_THREAD(coap_server, ev, data){
   	PROCESS_BEGIN();
 
-  	LOG_INFO("Starting Window Actuator\n");
+  	printf("Starting Window Actuator\n");
   	coap_activate_resource(&res_window, "window");
   	
   	etimer_set(&e_timer, CLOCK_SECOND * 10);
