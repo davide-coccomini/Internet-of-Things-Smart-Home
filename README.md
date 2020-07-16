@@ -11,6 +11,11 @@ The mote that have been defined are 3:
 * **Temperature sensor**: installed in several rooms of the house to monitor the temperature recorded.
 * **Window actuator**: actuator able to execute the commands sent by the temperature sensor, depending on the recorded heat it opens or closes the window.
 
+The resources associated with the sensors implement the 3 main request methods:
+* GET, to collect the values recorded by the sensor;
+* POST, to set values in the sensor, such as name or associated actuator IP.
+* PUT, to modify later values set in the POST.
+
 In order for the sensors to send the recorded data to the Web Server, it is also necessary to install a **Border Router** to which all the sensors that want to communicate with the outside must connect.
 
 ### Architecture
