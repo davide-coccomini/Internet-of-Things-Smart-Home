@@ -12,13 +12,7 @@ public class Mote {
     private String associatedMoteName;
 
     private List<SensorValue> values = new ArrayList<SensorValue>();
-/*
-    public Mote(String moteIP, String moteType, String moteResource) {
-        this.moteIP = moteIP;
-        this.moteType = moteType;
-        this.moteResource = moteResource;
-    }
-    */
+    
     public Mote(String moteName, String moteType, String moteResource) {
         this.moteName = moteName;
         this.moteType = moteType;

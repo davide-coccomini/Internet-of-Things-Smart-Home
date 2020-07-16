@@ -178,6 +178,9 @@ public class Servlet extends HttpServlet {
                 CoapClient act = new CoapClient("coap://[" + actuatorIP + "]/window");
                 act.put("value="+(actuator.getValues().get(0).getValue()==0?1:0),MediaTypeRegistry.TEXT_PLAIN);
                 
+                actuator.getValues().get(0).setValue(actuator.getValues().get(0).getValue()==0?1.0:0.0);
+                
+                
                 response.setHeader("Cache-Control", "no-cache");
             }
             else {

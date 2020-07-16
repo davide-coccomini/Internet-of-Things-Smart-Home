@@ -13,7 +13,6 @@ import org.eclipse.californium.core.coap.Response;
 import org.eclipse.californium.core.server.resources.CoapExchange;
 
 public class RegistrationResource extends CoapResource {
-	//private static String[] moteNames = {"Kitchen", "Bedroom", "Bath", "Garage", "Living"};
 	private static int count = 0;
 	
     public RegistrationResource(String name) {
@@ -56,8 +55,7 @@ public class RegistrationResource extends CoapResource {
 
     public static void coapClient(String moteIP, String moteResource) {
         CoapClient client = new CoapClient("coap://[" + moteIP + "]/" + moteResource);
-        //CoapObserveRelation relation = 
-		client.observe(
+        client.observe(
             new CoapHandler() {
                 public void onLoad(CoapResponse response) {
                     String content = response.getResponseText();

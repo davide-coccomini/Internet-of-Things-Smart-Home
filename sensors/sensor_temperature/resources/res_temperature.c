@@ -34,7 +34,6 @@ EVENT_RESOURCE(res_temperature,
 static void res_event_handler(void){
 	temp = (rand() % (max_temp - min_temp + 1)) + min_temp;
 	sprintf(s_temp, "%d", temp);
-	 // Notify all the observers
     coap_notify_observers(&res_temperature);
 }
 
@@ -55,12 +54,10 @@ static void res_post_handler(coap_message_t *request, coap_message_t *response, 
 		int x;
 		if((x = strcmp(ip, "None"))==0){
 			strcpy(actuator_ip, "");
-			printf("None\n");
 			actuator_ip_assigned = false;
 			coap_set_status_code(response, CREATED_2_01);
 		}
 		else{
-			printf("Else\n");
 			strcpy(actuator_ip, "coap://[");
 			strcat(actuator_ip,ip);
 			strcat(actuator_ip,"]:5683");
@@ -92,12 +89,10 @@ static void res_put_handler(coap_message_t *request, coap_message_t *response, u
 		int x;
 		if((x = strcmp(ip, "None"))==0){
 			strcpy(actuator_ip, "");
-			printf("None\n");
 			actuator_ip_assigned = false;
 			coap_set_status_code(response, CREATED_2_01);
 		}
 		else{
-			printf("Else\n");
 			strcpy(actuator_ip, "coap://[");
 			strcat(actuator_ip,ip);
 			strcat(actuator_ip,"]:5683");

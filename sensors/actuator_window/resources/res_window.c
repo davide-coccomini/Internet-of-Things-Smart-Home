@@ -29,7 +29,6 @@ EVENT_RESOURCE(res_window,
 
 static void res_event_handler(void){
 	status_changed = false;
-    // Notify all the observers
     coap_notify_observers(&res_window);
 }
 

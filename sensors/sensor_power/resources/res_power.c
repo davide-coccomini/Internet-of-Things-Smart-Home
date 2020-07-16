@@ -31,7 +31,6 @@ EVENT_RESOURCE(res_power,
 static void res_event_handler(void){
   	int pow = (rand() % (max_pow - min_pow + 1)) + min_pow;
 	sprintf(s_pow, "%d", pow);
-    // Notify all the observers
     coap_notify_observers(&res_power);
 }
 
