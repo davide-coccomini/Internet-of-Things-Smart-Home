@@ -19,10 +19,10 @@ The resources associated with the sensors implement the 3 main request methods:
 In order for the sensors to send the recorded data to the Web Server, it is also necessary to install a **Border Router** to which all the sensors that want to communicate with the outside must connect.
 
 <p align="center">
-  <img src="https://github.com/davide-coccomini/smart-home/blob/master/Smart-home-scheme.png">
+  <img src="https://github.com/davide-coccomini/smart-home/blob/master/smart-home.png">
 </p>
 
-### Architecture
+### Communication
 The CoAP protocol is of course used to communicate with the outside world.
 Every mote developed is both CoAP client and CoAP server, the client part only serves to register the sensor in the CoAP Server implemented in the Web Server: to register the sensor sends a request to the server address specifying the resource "*/sensorRegistration*" that takes care of saving the IP address of the sensor, the type and the resource it manages; instead the CoAP server part is used to activate the resource and manage the observers who want to register calling the *coap_notify_observers(&res)* command.
 
